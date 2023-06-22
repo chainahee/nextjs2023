@@ -21,7 +21,7 @@ const navigation = [
             {item.name}
           </Link>
         ))}
-        <button className='p-2 bg-purple-400 text-white cursor-pointer rounded-md' onClick={() => {
+        <button className='p-2 bg-purple-500 text-white cursor-pointer rounded-md' onClick={() => {
           console.log("Logged out")
         }}>Logout</button>
       </div>

@@ -2,7 +2,7 @@ import React from 'react'
 
 function Category() {
   return (
-    <div>Category</div>
+    <div className='text-pink-500'>Category</div>
   )
 }
 
