@@ -17,3 +17,8 @@ const BrandSchema = new Schema(
 const Brand = models.Brand || model("Brand", BrandSchema);
 
 export default Brand;
+
+BrandSchema.methods.toJSON = function () {
+  const brandObject = this.toObject();
+  return brandObject;
+};

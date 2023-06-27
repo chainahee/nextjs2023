@@ -28,7 +28,7 @@ function Settings() {
   return (
     <div>
       <h1 className='text-xl pb-3'>Choose a Menu</h1>
-      <div className="flex gap-10 justify-between">
+      <div className="gap-7 justify-between grid lg:grid-cols-4 md:grid-cols-2">
         {menuItems.map((menuItem, index) => (
           <Link href={menuItem.href} key={index} className='border-2 rounded-md w-[200px] h-[300px] relative bg-[url("https://images.unsplash.com/photo-1687220296822-5ae701b3b360?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80")] bg-cover'>
             <span className='text-base lg:text-2xl font-bold text-purple-500 hover:text-yellow-500 absolute right-3 bottom-3'>{menuItem.label}</span>

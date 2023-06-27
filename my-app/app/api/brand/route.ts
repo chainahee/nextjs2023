@@ -6,7 +6,7 @@ import mongoose from "mongoose";
 export async function POST(req: NextRequest) {
   connectToMongoDB().catch((err) => NextResponse.json(err));
 
-  const { name,timestamps } = await req.json();
+  const { name, _id } = await req.json();
 
   const userExists = await Brand.findOne({ name });
 
@@ -15,8 +15,7 @@ export async function POST(req: NextRequest) {
   } else {
     try {
       const newBrand = await Brand.create({
-        name,
-        timestamps
+        name, _id
       });
 
       return NextResponse.json(
@@ -40,16 +39,14 @@ export async function POST(req: NextRequest) {
 }
 
 export async function GET(req: NextRequest) {
-  connectToMongoDB().catch((err) => NextResponse.json(err));
-
   try {
+    await connectToMongoDB();
     const allBrands = await Brand.find();
-    Brand;
     return NextResponse.json({
       success: true,
-      users: allBrands,
+      brands: allBrands,
     });
   } catch (error) {
-    return NextResponse.json({ error: error });
+    return NextResponse.json({ error: error.message });
   }
 }
