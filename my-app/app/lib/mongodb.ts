@@ -1,25 +1,11 @@
-import mongoose, { ConnectOptions } from "mongoose";
+import mongoose from "mongoose";
 
-const { MONGO_URL } = process.env;
-
-if (!MONGO_URL) {
-  throw new Error("Invalid env variable: MONGO_URL");
-}
-
-export const connectToMongoDB = async () => {
-  if (mongoose.connection.readyState !== 0) {
-    console.log("MongoDB connection already established");
-    return;
-  }
-
+const connectMongoDB = async () => {
   try {
-    const { connection } = await mongoose.connect(MONGO_URL, {
-      useNewUrlParser: true,
-    } as ConnectOptions);
-    if (connection.readyState === 1) {
-      return Promise.resolve(true);
-    } 
-  } catch (error) {
-    return Promise.reject(error)
+    await mongoose.connect(process.env.MONGO_URL);
+  } catch (err) {
+    console.log(err);
   }
 };
+
+export default connectMongoDB;

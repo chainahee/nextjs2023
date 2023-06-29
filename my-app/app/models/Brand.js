@@ -1,24 +1,14 @@
-import { Schema, model, models } from "mongoose";
+import mongoose, { Schema } from "mongoose";
 
-const BrandSchema = new Schema(
+const brandSchema = new Schema(
   {
-    name: {
-      type: String,
-      required: [true, "Name is required"],
-      minLength: [2, "Name should be atleast 4 characters long"],
-      maxLength: [30, "Name should be less than 30 characters"],
-    },
+    name: String,
   },
   {
     timestamps: true,
   }
 );
 
-const Brand = models.Brand || model("Brand", BrandSchema);
+const Brand = mongoose.models.Brand || mongoose.model("Brand", brandSchema);
 
 export default Brand;
-
-BrandSchema.methods.toJSON = function () {
-  const brandObject = this.toObject();
-  return brandObject;
-};

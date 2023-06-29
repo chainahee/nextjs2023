@@ -1,51 +1,46 @@
 "use client";
 import From from "@/components/from/from";
-import React, { useEffect, useState } from "react";
+import Link from "next/link";
+
+import React, { useState } from "react";
 import { BsDatabaseAdd } from "react-icons/bs";
 import { FcEditImage, FcDeleteDatabase } from "react-icons/fc";
 
-interface Brand {
-  _id: string;
-  name: string;
-  __v: number;
-}
+const getBrands = async () => {
+  try {
+    const res = await fetch("http://localhost:3000/api/brand", {
+      cache: "no-store",
+    });
 
-async function getData() {
-  const res = await fetch("http://localhost:3000/api/brand");
-  const data = await res.json();
-  return data;
-}
+    if (!res.ok) {
+      throw new Error("failed to fetch brands");
+    }
 
-function Brand() {
-  const [brands, setBrands] = useState<Brand[]>([]);
+    return res.json();
+  } catch (error) {
+    console.log("Error loading brand", error);
+  }
+};
 
-  useEffect(() => {
-    const fetchData = async () => {
-      const data = await getData();
-      setBrands(data.brands);
-    };
-
-    fetchData();
-  }, []);
+async function Brand() {
+  const { brands } = await getBrands();
 
   return (
     <div className="max-w-4xl mx-auto mt-5">
-      <div className="">
-        <button className="bg-purple-400 rounded-lg border hover:border-purple-400 hover:bg-white ">
-          <span className="flex items-center px-5 py-2 gap-2 text-white hover:text-purple-700">
-            {" "}
-            Add Brand
-            <BsDatabaseAdd />
-          </span>
-        </button>
+      <div className="bg-red-100 p-3 flex items-center justify-between rounded-lg">
+        <h1 className="text-xl text-purple-600 font-bold">Manage Brand.</h1>
+        <Link href={"/settings/brand/add"}>
+          <button className="bg-purple-400 rounded-lg border hover:border-purple-400 hover:bg-white ">
+            <span className="flex items-center px-5 py-2 gap-2 text-white hover:text-purple-700">
+              {" "}
+              Add Brand
+              <BsDatabaseAdd />
+            </span>
+          </button>
+        </Link>
       </div>
-      <div className="">
-        <From />
-      </div>
-      <hr className="mb-6" />
-      <div className="flex justify-center mb-3">
-        <h1 className="text-2xl font-bold text-purple-800">Data Table Brand</h1>
-      </div>
+
+      <hr className="my-6" />
       <div className="flex items-center justify-center">
         <table className="w-4/6 mb-5">
           <thead className="bg-gray-800 text-white">
@@ -64,9 +59,9 @@ function Brand() {
                 <td className="p-3">{items.name}</td>
                 <td className="p-3">
                   <div className="flex gap-x-4 items-center justify-center text-3xl">
-                    <button>
+                    <Link href={`/settings/brand/update/${items._id}`}>
                       <FcEditImage />
-                    </button>
+                    </Link>
                     <button>
                       <FcDeleteDatabase />
                     </button>
