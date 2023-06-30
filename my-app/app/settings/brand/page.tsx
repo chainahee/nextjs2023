@@ -1,10 +1,12 @@
 "use client";
-import From from "@/components/from/from";
 import Link from "next/link";
 
 import React, { useState } from "react";
 import { BsDatabaseAdd } from "react-icons/bs";
-import { FcEditImage, FcDeleteDatabase } from "react-icons/fc";
+import { FcEditImage, FcSearch } from "react-icons/fc";
+import { DataTable } from "primereact/datatable";
+import { Column } from "primereact/column";
+import DeleteBrand from "@/components/brand/DeleteBrand";
 
 const getBrands = async () => {
   try {
@@ -23,11 +25,43 @@ const getBrands = async () => {
 };
 
 async function Brand() {
+  const [globalFilter, setGlobalFilter] = useState(null);
   const { brands } = await getBrands();
+  const indexColumnTemplate = (rowData, column) => {
+    return column.rowIndex + 1;
+  };
+
+  const actionBodyTemplate = (rowData) => {
+    return (
+      <React.Fragment>
+        <div className="flex gap-4">
+          <Link href={`/settings/brand/update/${rowData._id}`}>
+            <FcEditImage className="text-3xl" />
+          </Link>
+
+          <DeleteBrand id={rowData._id} />
+        </div>
+      </React.Fragment>
+    );
+  };
+
+  const header = (
+    <div className="flex flex-wrap gap-2 items-center justify-end">
+      <span className="flex items-center">
+        <FcSearch />
+        <input
+          type="search"
+          onInput={(e) => setGlobalFilter(e.target.value)}
+          placeholder="Search......"
+          className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+        ></input>
+      </span>
+    </div>
+  );
 
   return (
     <div className="max-w-4xl mx-auto mt-5">
-      <div className="bg-red-100 p-3 flex items-center justify-between rounded-lg">
+      <div className="bg-red-50 p-3 flex items-center justify-between rounded-lg">
         <h1 className="text-xl text-purple-600 font-bold">Manage Brand.</h1>
         <Link href={"/settings/brand/add"}>
           <button className="bg-purple-400 rounded-lg border hover:border-purple-400 hover:bg-white ">
@@ -41,36 +75,23 @@ async function Brand() {
       </div>
 
       <hr className="my-6" />
-      <div className="flex items-center justify-center">
-        <table className="w-4/6 mb-5">
-          <thead className="bg-gray-800 text-white">
-            <tr className="">
-              <th className="p-3">No.</th>
-              <th className="p-3">Name</th>
-              <th className="p-3">Action</th>
-            </tr>
-          </thead>
-          <tbody className="bg-gray-100 text-gray-800">
-            {brands.map((items, index) => (
-              <tr key={items._id}>
-                <td className="p-3 flex items-center justify-center">
-                  {index + 1}
-                </td>
-                <td className="p-3">{items.name}</td>
-                <td className="p-3">
-                  <div className="flex gap-x-4 items-center justify-center text-3xl">
-                    <Link href={`/settings/brand/update/${items._id}`}>
-                      <FcEditImage />
-                    </Link>
-                    <button>
-                      <FcDeleteDatabase />
-                    </button>
-                  </div>
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+      <div className="flex items-center justify-center max-w-4xl mx-auto">
+        <DataTable
+          value={brands}
+          showGridlines
+          stripedRows
+          header={header}
+          globalFilter={globalFilter}
+          paginator
+          rows={10}
+          style={{ fontSize: "15px", backgroundColor: "var(--primary-color)" }}
+          rowsPerPageOptions={[10, 25, 50]}
+          tableStyle={{ minWidth: "50rem" }}
+        >
+          <Column header="No." body={indexColumnTemplate}></Column>
+          <Column field="name" header="Name" sortable></Column>
+          <Column body={actionBodyTemplate} header="Action"></Column>
+        </DataTable>
       </div>
     </div>
   );

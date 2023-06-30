@@ -2,7 +2,10 @@ import Navbar from "@/components/navbar/Navbar";
 import "./globals.css";
 import { Inter } from "next/font/google";
 import Footer from "@/components/footer/page";
-
+import "primereact/resources/themes/lara-light-indigo/theme.css";     
+    
+//core
+import "primereact/resources/primereact.min.css";          
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {

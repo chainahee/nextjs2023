@@ -1,6 +1,6 @@
 import React from "react";
 import AddFormBrand from "../brand/addFormBrand";
-import UpdateFormBrand from "../brand/updateFormBrand";
+import UpdateFormBrand from "../brand/UpdateFormBrand";
 
 function from() {
   const flag = true;
