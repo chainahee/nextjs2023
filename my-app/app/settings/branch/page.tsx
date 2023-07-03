@@ -6,11 +6,11 @@ import { BsDatabaseAdd } from "react-icons/bs";
 import { FcEditImage, FcSearch } from "react-icons/fc";
 import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
-import DeleteCategory from "@/components/category/DeleteCategory";
+import DeleteBranch from "@/components/branch/DeleteBranch";
 
-const getCategory = async () => {
+const getBranchs = async () => {
   try {
-    const res = await fetch("http://localhost:3000/api/category", {
+    const res = await fetch("http://localhost:3000/api/branch", {
       cache: "no-store",
     });
 
@@ -26,7 +26,7 @@ const getCategory = async () => {
 
 async function Brand() {
   const [globalFilter, setGlobalFilter] = useState(null);
-  const { categorys } = await getCategory();
+  const { branchs } = await getBranchs();
   const indexColumnTemplate = (rowData, column) => {
     return column.rowIndex + 1;
   };
@@ -35,11 +35,11 @@ async function Brand() {
     return (
       <React.Fragment>
         <div className="flex gap-4">
-          <Link href={`/settings/category/update/${rowData._id}`}>
+          <Link href={`/settings/branch/update/${rowData._id}`}>
             <FcEditImage className="text-3xl" />
           </Link>
 
-          <DeleteCategory id={rowData._id} />
+          <DeleteBranch id={rowData._id} />
         </div>
       </React.Fragment>
     );
@@ -62,12 +62,12 @@ async function Brand() {
   return (
     <div className="max-w-4xl mx-auto mt-5">
       <div className="bg-red-50 p-3 flex items-center justify-between rounded-lg">
-        <h1 className="text-xl text-purple-600 font-bold">Manage Category.</h1>
-        <Link href={"/settings/category/add"}>
+        <h1 className="text-xl text-purple-600 font-bold">Manage Branch.</h1>
+        <Link href={"/settings/branch/add"}>
           <button className="bg-purple-400 rounded-lg border hover:border-purple-400 hover:bg-white ">
             <span className="flex items-center px-5 py-2 gap-2 text-white hover:text-purple-700">
               {" "}
-              Add Category
+              Add Branch
               <BsDatabaseAdd />
             </span>
           </button>
@@ -77,7 +77,7 @@ async function Brand() {
       <hr className="my-6" />
       <div className="flex items-center justify-center max-w-4xl mx-auto">
         <DataTable
-          value={categorys}
+          value={branchs}
           showGridlines
           stripedRows
           header={header}

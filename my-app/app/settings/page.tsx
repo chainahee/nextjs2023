@@ -1,37 +1,51 @@
-import Link from 'next/link';
-import React from 'react';
+import Link from "next/link";
+import React from "react";
+import { TbBrandFinder } from "react-icons/tb";
+import { AiOutlineTags } from "react-icons/ai";
+import { BsBuildings, BsBriefcase } from "react-icons/bs";
 
 function Settings() {
   const menuItems = [
     {
       href: "/settings/brand",
-      imageSrc: "https://images.unsplash.com/photo-1687220296822-5ae701b3b360?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80",
-      label: "Brand"
+      icon: <TbBrandFinder />,
+      label: "Brand",
     },
     {
       href: "/settings/category",
-      imageSrc: "https://images.unsplash.com/photo-1687270282079-58b4689fed0f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1936&q=80",
-      label: "Category"
+      icon: <AiOutlineTags />,
+      label: "Category",
     },
     {
       href: "/settings/department",
-      imageSrc: "https://images.unsplash.com/photo-1687270282079-58b4689fed0f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1936&q=80",
-      label: "Department"
+      icon: <BsBriefcase />,
+      label: "Department",
     },
     {
       href: "/settings/branch",
-      imageSrc: "https://images.unsplash.com/photo-1687270282079-58b4689fed0f?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1936&q=80",
-      label: "Branch"
-    }
+      icon: <BsBuildings />,
+      label: "Branch",
+    },
   ];
 
   return (
     <div>
-      <h1 className='text-xl pb-3'>Choose a Menu</h1>
-      <div className="gap-7 justify-between grid lg:grid-cols-4 md:grid-cols-2">
+      <div className="flex items-center justify-center">
+        <h1 className="text-3xl mb-16 text-pink-600 font-bold">Setting Menu</h1>
+      </div>
+      <div className="gap-7 grid md:grid-cols-2 lg:grid-cols-4 items-center">
         {menuItems.map((menuItem, index) => (
-          <Link href={menuItem.href} key={index} className='border-2 rounded-md w-[200px] h-[300px] relative bg-[url("https://images.unsplash.com/photo-1687220296822-5ae701b3b360?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=987&q=80")] bg-cover'>
-            <span className='text-base lg:text-2xl font-bold text-purple-500 hover:text-yellow-500 absolute right-3 bottom-3'>{menuItem.label}</span>
+          <Link
+            href={menuItem.href}
+            key={index}
+            className="border-2 rounded-md relative p-3 text-center flex items-center justify-center"
+          >
+            <div className="lg:flex lg:gap-3 grid justify-center items-center">
+              <span className="text-8xl text-purple-400">{menuItem.icon}</span>
+              <span className="lg:text-2xl md:text-xl text-lg font-bold text-purple-600 pt-4">
+                {menuItem.label}
+              </span>
+            </div>
           </Link>
         ))}
       </div>
