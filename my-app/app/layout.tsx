@@ -24,7 +24,9 @@ export default function RootLayout({
         <div className="h-screen flex flex-row justify-start">
           <Navbar />
           <div className="flex-1 p-4 bg-indigo-50">
+            <div className="bg-white p-5 rounded-lg h-full">
             {children}
+            </div>
           </div>
         </div>
       </body>
