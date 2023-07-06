@@ -33,7 +33,7 @@ function AddBrand() {
   };
 
   return (
-    <div className="mb-5 ">
+    <div className="grid min-h-full place-items-center bg-white px-6 py-24 sm:py-32 lg:px-8">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-center my-5">
           <h1 className="text-2xl font-bold">Form Add Branch</h1>
