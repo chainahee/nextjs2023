@@ -3,9 +3,29 @@ import Device from "@/app/models/Device";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
-  const { name } = await request.json();
+  const {
+    name,
+    serail,
+    disc,
+    brand,
+    category,
+    status,
+    startdate,
+    enddate,
+    price,
+  } = await request.json();
   await connectMongoDB();
-  await Device.create({ name });
+  await Device.create({
+    name,
+    serail,
+    disc,
+    brand,
+    category,
+    status,
+    startdate,
+    enddate,
+    price,
+  });
   return NextResponse.json({ msg: "Device Create" }, { status: 201 });
 }
 

@@ -73,7 +73,8 @@ function Navbar() {
           }`}
         />
         <input
-          type={"search"}
+          type="search"
+          id="search"
           placeholder="Search"
           className={`text-base w-full text-purple-800 bg-transparent focus:outline-none ${
             !open && "hidden"
@@ -82,24 +83,20 @@ function Navbar() {
       </div>
 
       {/* menu */}
-      <ul className="pt-4">
-        {navigation.map((item, index) => (
-          <>
-            <Link
-              key={index}
-              href={item.link}
-              className={` ${
-                router.pathname === item.link ? "bg-purple-800" : ""
-              } text-white text-lg flex items-center gap-x-4 cursor-pointer hover:bg-purple-800 p-2 rounded-md mt-2`}
-            >
-              <span className="text-2xl block float-left">{item.icon}</span>
-              <span className={`text-base flex-1 ${!open && "hidden"}`}>
-                {item.name}
-              </span>
-            </Link>
-          </>
+      <div className="pt-4">
+        {navigation.map((item) => (
+          <Link
+            key={item.id}
+            href={item.link}
+            className={`  text-white text-lg flex items-center gap-x-4 cursor-pointer hover:bg-purple-800 p-2 rounded-md mt-2`}
+          >
+            <span className="text-2xl block float-left">{item.icon}</span>
+            <span className={`text-base flex-1 ${!open && "hidden"}`}>
+              {item.name}
+            </span>
+          </Link>
         ))}
-      </ul>
+      </div>
     </div>
   );
 }
