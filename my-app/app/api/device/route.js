@@ -10,8 +10,8 @@ export async function POST(request) {
     brand,
     category,
     status,
-    startdate,
-    enddate,
+    startDate,
+    endDate,
     price,
   } = await request.json();
   await connectMongoDB();
@@ -22,8 +22,8 @@ export async function POST(request) {
     brand,
     category,
     status,
-    startdate,
-    enddate,
+    startDate,
+    endDate,
     price,
   });
   return NextResponse.json({ msg: "Device Create" }, { status: 201 });
