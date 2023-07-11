@@ -2,7 +2,7 @@
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 
-function AddBrand() {
+function AddStatusDevice() {
   const [name, setName] = useState("");
   const router = useRouter();
 
@@ -14,7 +14,7 @@ function AddBrand() {
       return;
     }
     try {
-      const res = await fetch("http://localhost:3000/api/brand", {
+      const res = await fetch("http://localhost:3000/api/statusdevice", {
         method: "POST",
         headers: {
           "Content-type": "application/json",
@@ -23,9 +23,9 @@ function AddBrand() {
       });
 
       if (res.ok) {
-        router.push("/settings/brand");
+        router.push("/settings/statusdevice");
       } else {
-        throw new Error("Failed to create a brand");
+        throw new Error("Failed to create a topic");
       }
     } catch (err) {
       console.log(err);
@@ -36,7 +36,7 @@ function AddBrand() {
     <div className="mb-5 ">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-center my-5">
-          <h1 className="text-2xl font-bold">Form Add Brand</h1>
+          <h1 className="text-2xl font-bold">Form Add Status Device</h1>
         </div>
         <div className="">
           <form onSubmit={handlerSubmit}>
@@ -64,4 +64,4 @@ function AddBrand() {
   );
 }
 
-export default AddBrand;
+export default AddStatusDevice;

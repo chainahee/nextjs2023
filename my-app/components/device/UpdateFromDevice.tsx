@@ -3,16 +3,27 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-function addBrand() {
-  const [name, setName] = useState("");
-  const [serial, setSerial] = useState("");
-  const [disc, setDisc] = useState("");
-  const [brand, setBrand] = useState("");
-  const [category, setCategory] = useState("");
-  const [status, setStatus] = useState("");
-  const [price, setPrice] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
+function UpdateFromDevice({
+  name,
+  serial,
+  id,
+  disc,
+  brand,
+  category,
+  status,
+  price,
+  startDate,
+  endDate,
+}) {
+  const [newName, setName] = useState(name);
+  const [newSerial, setSerial] = useState(serial);
+  const [newDisc, setDisc] = useState(disc);
+  const [newBrand, setBrand] = useState(brand);
+  const [newCategory, setCategory] = useState(category);
+  const [newStatus, setStatus] = useState(status);
+  const [newPrice, setPrice] = useState(price);
+  const [newStartDate, setStartDate] = useState(startDate);
+  const [newEendDate, setEndDate] = useState(endDate);
 
   const router = useRouter();
   const [brands, setBrands] = useState([]);
@@ -53,7 +64,6 @@ function addBrand() {
     fetchCategorys();
   }, []);
 
-
   useEffect(() => {
     const fetchStatusDevice = async () => {
       try {
@@ -71,49 +81,32 @@ function addBrand() {
     fetchStatusDevice();
   }, []);
 
-  
-
   const handlerSubmit = async (e) => {
     e.preventDefault();
 
-    if (
-      !name ||
-      !serial ||
-      !brand ||
-      !category ||
-      !status ||
-      !price ||
-      !disc ||
-      !startDate ||
-      !endDate
-    ) {
-      alert("โปรดกรอกข้อมูลให้ครบ");
-      return;
-    }
     try {
-      const res = await fetch("http://localhost:3000/api/device", {
-        method: "POST",
+      const res = await fetch(`http://localhost:3000/api/device/${id}`, {
+        method: "PUT",
         headers: {
           "Content-type": "application/json",
         },
         body: JSON.stringify({
-          name,
-          serial,
-          brand,
-          category,
-          price,
-          startDate,
-          status,
-          endDate,
-          disc,
+          newName,
+          newSerial,
+          newBrand,
+          newCategory,
+          newDisc,
+          newEendDate,
+          newPrice,
+          newStartDate,
+          newStatus,
         }),
       });
 
-      if (res.ok) {
-        router.push("/device");
-      } else {
-        throw new Error("Failed to create a device");
+      if (!res.ok) {
+        throw new Error("Failed to update");
       }
+      router.push("/device");
     } catch (err) {
       console.log(err);
     }
@@ -122,7 +115,7 @@ function addBrand() {
   return (
     <div>
       <div className="flex items-center justify-center my-5">
-        <h1 className="text-2xl font-bold text-indigo-500">Form Add Device</h1>
+        <h1 className="text-2xl font-bold text-indigo-500">Form Update Status Device</h1>
       </div>
       <form onSubmit={handlerSubmit}>
         <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
@@ -137,7 +130,7 @@ function addBrand() {
               type="text"
               name="serial"
               id="serial"
-              value={serial}
+              value={newSerial}
               onChange={(e) => setSerial(e.target.value)}
               placeholder="Serial Number"
               className="mt-2 block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -152,7 +145,7 @@ function addBrand() {
             </label>
             <input
               type="text"
-              value={name}
+              value={newName}
               name="name"
               id="name"
               autoComplete="given-name"
@@ -175,7 +168,7 @@ function addBrand() {
               <select
                 id="brand"
                 name="brand"
-                value={brand}
+                value={newBrand}
                 autoComplete="status"
                 onChange={(e) => setBrand(e.target.value)}
                 className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -201,7 +194,7 @@ function addBrand() {
               <select
                 id="category"
                 name="category"
-                value={category}
+                value={newCategory}
                 autoComplete="status"
                 onChange={(e) => setCategory(e.target.value)}
                 className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -227,7 +220,7 @@ function addBrand() {
               <select
                 id="status"
                 name="status"
-                value={status}
+                value={newStatus}
                 onChange={(e) => setStatus(e.target.value)}
                 autoComplete="status"
                 className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -259,7 +252,7 @@ function addBrand() {
                 type="number"
                 name="price"
                 id="price"
-                value={price}
+                value={newPrice}
                 onChange={(e) => setPrice(e.target.value)}
                 className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 placeholder="0.00"
@@ -276,7 +269,7 @@ function addBrand() {
             <div className="mt-2">
               <input
                 type="date"
-                value={startDate}
+                value={newStartDate}
                 name="start-date"
                 id="start-date"
                 onChange={(e) => setStartDate(e.target.value)}
@@ -295,7 +288,7 @@ function addBrand() {
             <div className="mt-2">
               <input
                 type="date"
-                value={endDate}
+                value={newEendDate}
                 name="end-date"
                 id="end-date"
                 onChange={(e) => setEndDate(e.target.value)}
@@ -317,7 +310,7 @@ function addBrand() {
               <textarea
                 name="discription"
                 id="discription"
-                value={disc}
+                value={newDisc}
                 rows={3}
                 onChange={(e) => setDisc(e.target.value)}
                 className="mt-2 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -336,7 +329,7 @@ function addBrand() {
             type="submit"
             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Save
+            Update
           </button>
         </div>
       </form>
@@ -344,4 +337,4 @@ function addBrand() {
   );
 }
 
-export default addBrand;
+export default UpdateFromDevice;

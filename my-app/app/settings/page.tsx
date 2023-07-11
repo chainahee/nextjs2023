@@ -17,6 +17,11 @@ function Settings() {
       label: "Category",
     },
     {
+      href: "/settings/statusdevice",
+      icon: <AiOutlineTags />,
+      label: "Status Device",
+    },
+    {
       href: "/settings/department",
       icon: <BsBriefcase />,
       label: "Department",
