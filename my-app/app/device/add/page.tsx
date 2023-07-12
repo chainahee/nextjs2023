@@ -2,6 +2,8 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import axios from "axios";
+
 
 function addBrand() {
   const [name, setName] = useState("");
@@ -53,7 +55,6 @@ function addBrand() {
     fetchCategorys();
   }, []);
 
-
   useEffect(() => {
     const fetchStatusDevice = async () => {
       try {
@@ -71,22 +72,10 @@ function addBrand() {
     fetchStatusDevice();
   }, []);
 
-  
-
   const handlerSubmit = async (e) => {
     e.preventDefault();
 
-    if (
-      !name ||
-      !serial ||
-      !brand ||
-      !category ||
-      !status ||
-      !price ||
-      !disc ||
-      !startDate ||
-      !endDate
-    ) {
+    if (!name || !serial || !brand || !category || !status || !price || !disc) {
       alert("โปรดกรอกข้อมูลให้ครบ");
       return;
     }
@@ -109,6 +98,8 @@ function addBrand() {
         }),
       });
 
+      console.log(res);
+
       if (res.ok) {
         router.push("/device");
       } else {
@@ -118,6 +109,9 @@ function addBrand() {
       console.log(err);
     }
   };
+
+console.log(brand);
+
 
   return (
     <div>

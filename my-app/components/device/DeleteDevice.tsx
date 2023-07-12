@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { FcDeleteDatabase } from "react-icons/fc";
 import { useRouter } from "next/navigation";
 
 function DeleteDevice({ id }) {
@@ -16,11 +15,7 @@ function DeleteDevice({ id }) {
       }
     }
   };
-  return (
-    <button onClick={removeDevice}>
-      <FcDeleteDatabase className="text-3xl" />
-    </button>
-  );
+  return <button onClick={removeDevice}>Delete</button>;
 }
 
 export default DeleteDevice;

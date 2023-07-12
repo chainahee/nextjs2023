@@ -5,7 +5,7 @@ import { NextResponse } from "next/server";
 export async function POST(request) {
   const {
     name,
-    serail,
+    serial,
     disc,
     brand,
     category,
@@ -17,7 +17,7 @@ export async function POST(request) {
   await connectMongoDB();
   await Device.create({
     name,
-    serail,
+    serial,
     disc,
     brand,
     category,
@@ -40,4 +40,43 @@ export async function DELETE(request) {
   await connectMongoDB();
   await Device.findByIdAndDelete(id);
   return NextResponse.json({ message: "Device deleted" }, { status: 200 });
+}
+
+export default async function handler(req, res) {
+  try {
+    const { db } = await connectMongoDB();
+
+    const devices = await db
+      .collection("devices")
+      .aggregate([
+        {
+          $lookup: {
+            from: "brands",
+            localField: "brand",
+            foreignField: "_id",
+            as: "brandData",
+          },
+        },
+        {
+          $match: {
+            $and: [{ "brandInfo.name": "HP" }, { price: { $gt: 2000 } }],
+          },
+        },
+        {
+          $project: {
+            _id: 0,
+            name: 1,
+            price: 1,
+            brandInfo: {
+              name: 1,
+            },
+          },
+        },
+      ])
+      .toArray();
+
+    res.status(200).json(devices);
+  } catch (error) {
+    res.status(500).json({ error: "Failed to fetch devices" });
+  }
 }

@@ -1,5 +1,6 @@
 import React from "react";
 import Link from "next/link";
+import DeleteDevice from "@/components/device/DeleteDevice";
 
 const getDevices = async () => {
   try {
@@ -18,6 +19,7 @@ const getDevices = async () => {
 };
 
 async function Device() {
+  
   const { devices } = await getDevices();
 
   return (
@@ -37,7 +39,7 @@ async function Device() {
           <table className="table-auto md:table-fixed w-full border-collapse bg-white text-left text-sm text-gray-500 ">
             <thead className="bg-gray-50">
               <tr className="px-3">
-                <th scope="col" className="px-6 py-4 font-medium text-gray-900">
+                <th scope="col" className="px-6 py-2 font-medium text-gray-900">
                   No
                 </th>
                 <th scope="col" className="px-6 py-4 font-medium text-gray-900">
@@ -66,7 +68,7 @@ async function Device() {
             <tbody className="divide-y divide-gray-100 border-t border-gray-100">
               {devices.map((item, index) => (
                 <tr key={item._id} className="hover:bg-gray-50">
-                  <td className="px-6 py-4">{index + 1}</td>
+                  <td className="px-6 py-2">{index + 1}</td>
                   <td className="px-6 py-4">{item.serial}</td>
                   <td className="px-6 py-4">{item.name}</td>
                   <td className="px-6 py-4">{item.brand}</td>
@@ -82,9 +84,9 @@ async function Device() {
                           Edite
                         </button>
                       </Link>
-                      <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                        Delete
-                      </button>
+                      <div className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                        <DeleteDevice id={item._id} />
+                      </div>
                     </div>
                   </td>
                 </tr>

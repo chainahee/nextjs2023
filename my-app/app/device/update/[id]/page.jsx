@@ -22,7 +22,7 @@ async function UpdateDevice({ params }) {
   const { device } = await getDeviceById(id);
   const {
     name,
-    serail,
+    serial,
     disc,
     brand,
     category,
@@ -36,7 +36,7 @@ async function UpdateDevice({ params }) {
     <UpdateFromDevice
       id={id}
       name={name}
-      serail={serail}
+      serial={serial}
       disc={disc}
       brand={brand}
       category={category}
