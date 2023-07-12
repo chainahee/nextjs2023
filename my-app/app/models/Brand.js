@@ -2,6 +2,7 @@ import mongoose, { Schema } from "mongoose";
 
 const brandSchema = new Schema(
   {
+    brand_id: String,
     name: String,
   },
   {

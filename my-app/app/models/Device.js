@@ -2,9 +2,9 @@ import mongoose, { Schema } from "mongoose";
 
 const deviceSchema = new Schema(
   {
-    name: { Type: String },
-    serial: { Type: String },
-    disc: { Type: String },
+    name: String,
+    serial: String,
+    disc: String,
     brand: { Type: Schema.Types.ObjectId },
     category: { Type: Schema.Types.ObjectId },
     startDate: Date,

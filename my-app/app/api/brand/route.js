@@ -3,9 +3,9 @@ import Brand from "@/app/models/Brand";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
-  const { name } = await request.json();
+  const { name, brand_id } = await request.json();
   await connectMongoDB();
-  await Brand.create({ name });
+  await Brand.create({ name, brand_id });
   return NextResponse.json({ msg: "Brand Create" }, { status: 201 });
 }
 
