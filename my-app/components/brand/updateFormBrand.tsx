@@ -1,9 +1,11 @@
 "use client";
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
+import Link from "next/link";
 
-function UpdateFormBrand({ name, id }) {
+function UpdateFormBrand({ name, id, brand_id }) {
   const [newName, setName] = useState(name);
+  const [newBrand_id, setBrandId] = useState(brand_id);
   const router = useRouter();
 
   const handleSubmit = async (e) => {
@@ -15,7 +17,7 @@ function UpdateFormBrand({ name, id }) {
         headers: {
           "Content-type": "application/json",
         },
-        body: JSON.stringify({ newName }),
+        body: JSON.stringify({ newName, newBrand_id }),
       });
 
       if (!res.ok) {
@@ -31,22 +33,50 @@ function UpdateFormBrand({ name, id }) {
     <div className="mb-5 ">
       <div className="max-w-4xl mx-auto">
         <div className="flex items-center justify-center my-3">
-          <h1 className="text-2xl font-bold">Form Add Brand</h1>
+          <h1 className="text-3xl font-bold text-indigo-600">Form Update Brand</h1>
         </div>
         <form onSubmit={handleSubmit}>
-          <div className="">
-            <input
-              onChange={(e) => setName(e.target.value)}
-              value={newName}
-              type="text"
-              placeholder="Name"
-              className="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            />
+          <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+            <div className="sm:col-span-3">
+              <label
+                htmlFor="serial"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Brand ID :
+              </label>
+              <input
+                type="text"
+                value={newBrand_id}
+                placeholder="Brand ID"
+                onChange={(e) => setBrandId(e.target.value)}
+                className="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
+            <div className="sm:col-span-3">
+              <label
+                htmlFor="Name"
+                className="block text-sm font-medium leading-6 text-gray-900"
+              >
+                Name Brand :
+              </label>
+              <input
+                type="text"
+                value={newName}
+                placeholder="Name"
+                onChange={(e) => setName(e.target.value)}
+                className="block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
+              />
+            </div>
           </div>
-          <div className="flex items-center justify-center mb-5">
+          <div className="mt-6 flex items-center justify-end gap-x-6">
+            <Link href="/settings/brand">
+              <span className="text-sm font-semibold leading-6 text-gray-900">
+                Cancel
+              </span>
+            </Link>
             <button
               type="submit"
-              className="bg-purple-400 w-2/6 px-4 py-2 rounded-lg text-white mt-8 hover:bg-white hover:border-purple-400  hover:text-purple-800 border"
+              className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               Update
             </button>

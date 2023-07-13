@@ -20,9 +20,9 @@ const getBrandById = async (id) => {
 async function UpdateBrand({ params }) {
   const { id } = params;
   const { brand } = await getBrandById(id);
-  const { name } = brand;
+  const { name, brand_id } = brand;
   console.log(id);
-  return <UpdateFormBrand id={id} name={name} />;
+  return <UpdateFormBrand id={id} name={name} brand_id={brand_id} />;
 }
 
 export default UpdateBrand;

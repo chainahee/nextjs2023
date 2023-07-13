@@ -4,7 +4,7 @@ import { NextResponse } from "next/server";
 
 export async function PUT(request, { params }) {
   const { id } = params;
-  const { newName: name, newBrandId: brand_id } = await request.json();
+  const { newName: name, newBrand_id: brand_id } = await request.json();
   await connectMongoDB();
   await Brand.findByIdAndUpdate(id, { name, brand_id });
   return NextResponse.json({ message: "Brand updated" }, { status: 200 });

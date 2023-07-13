@@ -25,7 +25,7 @@ const getBrands = async () => {
 };
 
 async function Brand() {
-  const [globalFilter, setGlobalFilter] = useState(null);
+  const [globalFilter, setGlobalFilter] = useState();
   const { brands } = await getBrands();
   const indexColumnTemplate = (rowData, column) => {
     return column.rowIndex + 1;
@@ -60,38 +60,40 @@ async function Brand() {
   );
 
   return (
-    <div className="max-w-4xl mx-auto mt-5">
-      <div className="bg-red-50 p-3 flex items-center justify-between rounded-lg">
-        <h1 className="text-xl text-purple-600 font-bold">Manage Brand.</h1>
+    <div className="grid place-items-center bg-white">
+      <div className="text-center">
+        <p className="text-3xl font-bold text-indigo-600">Brand Management</p>
         <Link href={"/settings/brand/add"}>
-          <button className="bg-purple-400 rounded-lg border hover:border-purple-400 hover:bg-white ">
-            <span className="flex items-center px-5 py-2 gap-2 text-white hover:text-purple-700">
-              {" "}
+          <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 my-5">
+            <span className="flex items-center gap-2">
               Add Brand
               <BsDatabaseAdd />
             </span>
           </button>
         </Link>
-      </div>
 
-      <hr className="my-6" />
-      <div className="flex items-center justify-center max-w-4xl mx-auto">
-        <DataTable
-          value={brands}
-          showGridlines
-          stripedRows
-          header={header}
-          globalFilter={globalFilter}
-          paginator
-          rows={10}
-          style={{ fontSize: "15px", backgroundColor: "var(--primary-color)" }}
-          rowsPerPageOptions={[10, 25, 50]}
-          tableStyle={{ minWidth: "50rem" }}
-        >
-          <Column header="No." body={indexColumnTemplate}></Column>
-          <Column field="name" header="Name" sortable></Column>
-          <Column body={actionBodyTemplate} header="Action"></Column>
-        </DataTable>
+        <div className="flex items-center justify-center max-w-4xl mx-auto">
+          <DataTable
+            value={brands}
+            showGridlines
+            stripedRows
+            header={header}
+            globalFilter={globalFilter}
+            paginator
+            rows={10}
+            style={{
+              fontSize: "15px",
+              backgroundColor: "var(--primary-color)",
+            }}
+            rowsPerPageOptions={[10, 25, 50]}
+            tableStyle={{ minWidth: "50rem" }}
+          >
+            <Column header="No." body={indexColumnTemplate}></Column>
+            <Column field="brand_id" header="Brand ID" sortable></Column>
+            <Column field="name" header="Name" sortable></Column>
+            <Column body={actionBodyTemplate} header="Action"></Column>
+          </DataTable>
+        </div>
       </div>
     </div>
   );

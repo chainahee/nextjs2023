@@ -19,7 +19,6 @@ const getDevices = async () => {
 };
 
 async function Device() {
-  
   const { devices } = await getDevices();
 
   return (
@@ -48,9 +47,7 @@ async function Device() {
                 <th scope="col" className="px-6 py-4 font-medium text-gray-900">
                   Name
                 </th>
-                <th scope="col" className="px-6 py-4 font-medium text-gray-900">
-                  Brand
-                </th>
+
                 <th scope="col" className="px-6 py-4 font-medium text-gray-900">
                   Category
                 </th>
@@ -71,7 +68,6 @@ async function Device() {
                   <td className="px-6 py-2">{index + 1}</td>
                   <td className="px-6 py-4">{item.serial}</td>
                   <td className="px-6 py-4">{item.name}</td>
-                  <td className="px-6 py-4">{item.brand}</td>
                   <td className="px-6 py-4">{item.category}</td>
                   <td className="px-6 py-4">
                     {new Date(item.endDate).toLocaleDateString("en-GB")}

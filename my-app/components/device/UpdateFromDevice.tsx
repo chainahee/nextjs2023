@@ -116,7 +116,7 @@ function UpdateFromDevice({
     <div>
       <div className="flex items-center justify-center my-5">
         <h1 className="text-2xl font-bold text-indigo-500">
-          Form Update Status Device
+          Form Update Device
         </h1>
       </div>
       <form onSubmit={handlerSubmit}>

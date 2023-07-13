@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import axios from "axios";
 
 
-function addDevice() {
+function addBrand() {
   const [name, setName] = useState("");
   const [serial, setSerial] = useState("");
   const [disc, setDisc] = useState("");
@@ -338,4 +338,4 @@ console.log(brand);
   );
 }
 
-export default addDevice;
+export default addBrand;
