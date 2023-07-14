@@ -274,7 +274,11 @@ function UpdateFromDevice({
                 value={newStartDate}
                 name="start-date"
                 id="start-date"
-                onChange={(e) => setStartDate(e.target.value)}
+                onChange={(e) => {
+                  const selectedDate = e.target.value;
+                  const formattedDate = new Date(selectedDate).toISOString().split("T")[0];
+                  setStartDate(formattedDate);
+                }}
                 className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>
@@ -293,7 +297,11 @@ function UpdateFromDevice({
                 value={newEendDate}
                 name="end-date"
                 id="end-date"
-                onChange={(e) => setEndDate(e.target.value)}
+                onChange={(e) => {
+                  const selectedDate = e.target.value;
+                  const formattedDate = new Date(selectedDate).toISOString().split("T")[0];
+                  setEndDate(formattedDate);
+                }}
                 className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
             </div>

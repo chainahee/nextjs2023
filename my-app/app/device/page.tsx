@@ -49,6 +49,9 @@ async function Device() {
                 </th>
 
                 <th scope="col" className="px-6 py-4 font-medium text-gray-900">
+                  brand
+                </th>
+                <th scope="col" className="px-6 py-4 font-medium text-gray-900">
                   Category
                 </th>
                 <th scope="col" className="px-6 py-4 font-medium text-gray-900">
@@ -68,6 +71,7 @@ async function Device() {
                   <td className="px-6 py-2">{index + 1}</td>
                   <td className="px-6 py-4">{item.serial}</td>
                   <td className="px-6 py-4">{item.name}</td>
+                  <td className="px-6 py-4">{item.brand}</td>
                   <td className="px-6 py-4">{item.category}</td>
                   <td className="px-6 py-4">
                     {new Date(item.endDate).toLocaleDateString("en-GB")}

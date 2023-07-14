@@ -4,8 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
-
-function addBrand() {
+function addDevice() {
   const [name, setName] = useState("");
   const [serial, setSerial] = useState("");
   const [disc, setDisc] = useState("");
@@ -24,11 +23,8 @@ function addBrand() {
   useEffect(() => {
     const fetchBrands = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/brand");
-        if (!response.ok) {
-          throw new Error("Failed to fetch brands");
-        }
-        const data = await response.json();
+        const response = await axios.get("http://localhost:3000/api/brand");
+        const data = response.data;
         setBrands(data.brands);
       } catch (error) {
         console.log("Error loading brands", error);
@@ -41,11 +37,8 @@ function addBrand() {
   useEffect(() => {
     const fetchCategorys = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/category");
-        if (!response.ok) {
-          throw new Error("Failed to fetch categorys");
-        }
-        const data = await response.json();
+        const response = await axios.get("http://localhost:3000/api/category");
+        const data = response.data;
         setCategorys(data.categorys);
       } catch (error) {
         console.log("Error loading categorys", error);
@@ -58,11 +51,10 @@ function addBrand() {
   useEffect(() => {
     const fetchStatusDevice = async () => {
       try {
-        const response = await fetch("http://localhost:3000/api/statusdevice");
-        if (!response.ok) {
-          throw new Error("Failed to fetch statusdevices");
-        }
-        const data = await response.json();
+        const response = await axios.get(
+          "http://localhost:3000/api/statusdevice"
+        );
+        const data = response.data;
         setStatusDevices(data.statusdevices);
       } catch (error) {
         console.log("Error loading statusdevices", error);
@@ -74,12 +66,18 @@ function addBrand() {
 
   const handlerSubmit = async (e) => {
     e.preventDefault();
-
+  
     if (!name || !serial || !brand || !category || !status || !price || !disc) {
       alert("โปรดกรอกข้อมูลให้ครบ");
       return;
     }
     try {
+      const brandName = brands.find((item) => item._id === brand);
+      const categoryName = categorys.find((item) => item._id === category);
+      const statusName = statusdevices.find((item) => item._id === status);
+      const brandValue = brandName ? brandName.name : "";
+      const categoryValue = categoryName ? categoryName.name : "";
+      const statusValue = statusName ? statusName.name : "";
       const res = await fetch("http://localhost:3000/api/device", {
         method: "POST",
         headers: {
@@ -88,18 +86,18 @@ function addBrand() {
         body: JSON.stringify({
           name,
           serial,
-          brand,
-          category,
+          brand: brandValue,
+          category: categoryValue,
           price,
           startDate,
-          status,
+          status: statusValue,
           endDate,
           disc,
         }),
       });
-
+  
       console.log(res);
-
+  
       if (res.ok) {
         router.push("/device");
       } else {
@@ -109,9 +107,7 @@ function addBrand() {
       console.log(err);
     }
   };
-
-console.log(brand);
-
+  
 
   return (
     <div>
@@ -338,4 +334,4 @@ console.log(brand);
   );
 }
 
-export default addBrand;
+export default addDevice;
