@@ -66,18 +66,12 @@ function addDevice() {
 
   const handlerSubmit = async (e) => {
     e.preventDefault();
-  
+
     if (!name || !serial || !brand || !category || !status || !price || !disc) {
       alert("โปรดกรอกข้อมูลให้ครบ");
       return;
     }
     try {
-      const brandName = brands.find((item) => item._id === brand);
-      const categoryName = categorys.find((item) => item._id === category);
-      const statusName = statusdevices.find((item) => item._id === status);
-      const brandValue = brandName ? brandName.name : "";
-      const categoryValue = categoryName ? categoryName.name : "";
-      const statusValue = statusName ? statusName.name : "";
       const res = await fetch("http://localhost:3000/api/device", {
         method: "POST",
         headers: {
@@ -86,18 +80,18 @@ function addDevice() {
         body: JSON.stringify({
           name,
           serial,
-          brand: brandValue,
-          category: categoryValue,
+          brand,
+          category,
           price,
           startDate,
-          status: statusValue,
+          status,
           endDate,
           disc,
         }),
       });
-  
+
       console.log(res);
-  
+
       if (res.ok) {
         router.push("/device");
       } else {
@@ -107,7 +101,6 @@ function addDevice() {
       console.log(err);
     }
   };
-  
 
   return (
     <div>
@@ -171,9 +164,9 @@ function addDevice() {
                 className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               >
                 <option value="">Select a brand</option>
-                {brands.map((brand) => (
-                  <option key={brand._id} value={brand._id}>
-                    {brand.name}
+                {brands.map((items) => (
+                  <option key={items._id} value={items._id}>
+                    {items.name}
                   </option>
                 ))}
               </select>

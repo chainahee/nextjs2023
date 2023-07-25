@@ -10,6 +10,7 @@ import {
   RxGear,
   RxSymbol,
   RxArchive,
+  RxEnter,
 } from "react-icons/rx";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -28,6 +29,7 @@ function Navbar() {
       icon: <RxGear />,
     },
     { id: 11, name: "Report", href: "/report", icon: <RxArchive /> },
+    { id: 6, name: "Log In", href: "/login", icon: <RxEnter /> },
   ];
 
   const [open, setOpen] = useState(true);

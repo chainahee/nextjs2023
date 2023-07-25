@@ -3,52 +3,37 @@ import Device from "@/app/models/Device";
 import { NextResponse } from "next/server";
 
 export async function POST(request) {
-  try {
-    await connectMongoDB();
-
-    const {
-      name,
-      serial,
-      disc,
-      brand,
-      category,
-      status,
-      startDate,
-      endDate,
-      price,
-    } = await request.json();
-
-    const newDevice = new Device({
-      name,
-      serial,
-      disc,
-      brand,
-      category,
-      status,
-      startDate,
-      endDate,
-      price,
-    });
-
-    await newDevice.save();
-
-    return {
-      status: 201,
-      body: { msg: "Device Created" },
-    };
-  } catch (error) {
-    console.log(error);
-    return {
-      status: 500,
-      body: { msg: "Failed to create a device" },
-    };
-  }
+  const {
+    name,
+    serial,
+    disc,
+    brand,
+    category,
+    status,
+    startDate,
+    endDate,
+    price,
+  } = await request.json();
+  await connectMongoDB();
+  await Device.create({
+    name,
+    serial,
+    disc,
+    brand:brand,
+    category,
+    status,
+    startDate,
+    endDate,
+    price,
+  });
+  return NextResponse.json({ msg: "Device Create" }, { status: 201 });
 }
+
 
 export async function GET() {
   try {
     await connectMongoDB();
-    const devices = await Device.find();
+    const devices = await Device.find().populate('brand');
     return NextResponse.json({ devices });
   } catch (error) {
     console.log(error);
@@ -73,4 +58,3 @@ export async function DELETE(request) {
     };
   }
 }
-
