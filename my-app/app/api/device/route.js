@@ -19,7 +19,7 @@ export async function POST(request) {
     name,
     serial,
     disc,
-    brand:brand,
+    brand: brand,
     category,
     status,
     startDate,
@@ -29,11 +29,10 @@ export async function POST(request) {
   return NextResponse.json({ msg: "Device Create" }, { status: 201 });
 }
 
-
 export async function GET() {
   try {
     await connectMongoDB();
-    const devices = await Device.find().populate('brand');
+    const devices = await Device.find({});
     return NextResponse.json({ devices });
   } catch (error) {
     console.log(error);
