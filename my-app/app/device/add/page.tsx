@@ -8,7 +8,7 @@ function addDevice() {
   const [name, setName] = useState("");
   const [serial, setSerial] = useState("");
   const [disc, setDisc] = useState("");
-  
+
   const [category, setCategory] = useState("");
   const [status, setStatus] = useState("");
   const [price, setPrice] = useState("");
@@ -68,7 +68,20 @@ function addDevice() {
   const handlerSubmit = async (e) => {
     e.preventDefault();
 
-    if (!name || !serial || !brand || !category || !status || !price || !disc) {
+    const brandResponse = await fetch(
+      `http://localhost:3000/api/brand/${selectedBrand}`
+    );
+    const brandData = await brandResponse.json();
+
+    if (
+      !name ||
+      !serial ||
+      !selectedBrand ||
+      !category ||
+      !status ||
+      !price ||
+      !disc
+    ) {
       alert("โปรดกรอกข้อมูลให้ครบ");
       return;
     }
@@ -102,6 +115,8 @@ function addDevice() {
       console.log(err);
     }
   };
+
+  console.log(selectedBrand);
 
   return (
     <div>
@@ -192,7 +207,7 @@ function addDevice() {
               >
                 <option value="">Select a category</option>
                 {categorys.map((category) => (
-                  <option key={category._id} value={category._id}>
+                  <option key={category._id} value={category.name}>
                     {category.name}
                   </option>
                 ))}
@@ -218,7 +233,7 @@ function addDevice() {
               >
                 <option value="">Select a status</option>
                 {statusdevices.map((status) => (
-                  <option key={status._id} value={status._id}>
+                  <option key={status._id} value={status.name}>
                     {status.name}
                   </option>
                 ))}

@@ -8,7 +8,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import DeleteDepartment from "@/components/department/Deletedepartment";
 
-const getCategory = async () => {
+const getDepartment = async () => {
   try {
     const res = await fetch("http://localhost:3000/api/department", {
       cache: "no-store",
@@ -26,7 +26,7 @@ const getCategory = async () => {
 
 async function Department() {
   const [globalFilter, setGlobalFilter] = useState(null);
-  const { departments } = await getCategory();
+  const { departments } = await getDepartment();
   const indexColumnTemplate = (rowData, column) => {
     return column.rowIndex + 1;
   };

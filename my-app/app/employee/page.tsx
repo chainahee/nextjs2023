@@ -1,47 +1,17 @@
 "use client";
 import React, { useState, useEffect } from "react";
+import Link from "next/link";
 
 function Employee() {
-  const [brands, setBrands] = useState([]);
-  const [selectBrand, setSelectBrand] = useState("");
-
-  useEffect(() => {
-    const fetchBrands = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/api/brand");
-        if (!response.ok) {
-          throw new Error("Failed to fetch brands");
-        }
-        const data = await response.json();
-        setBrands(data.brands);
-      } catch (error) {
-        console.log("Error loading brands", error);
-      }
-    };
-
-    fetchBrands();
-  }, []);
-
-console.log(selectBrand);
-
-
   return (
-    <div>
-      <label htmlFor="brand">Brand:</label>
-      <select
-        id="brand"
-        name="brand"
-        className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-        value={selectBrand}
-        onChange={(e) => setSelectBrand(e.target.value)}
-      >
-        <option value="">Select a brand</option>
-        {brands.map((brand) => (
-          <option key={brand._id} value={brand._id}>
-            {brand.name}
-          </option>
-        ))}
-      </select>
+    <div className="grid place-items-center bg-white">
+      <div className="text-center">
+        <p className="text-3xl font-bold text-indigo-600">Employee Management</p>
+        <div className="my-4">
+          <Link
+          href={"/employee/add"} className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Add Employee</Link>
+        </div>
+      </div>
     </div>
   );
 }

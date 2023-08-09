@@ -10,16 +10,16 @@ function Borrow() {
           Borrow - Rertrun Device
         </h1>
       </div>
-      <div className="rounded-lg border-2 py-5 mt-5 px-3">
+      <div className="rounded-lg border-2 py-5 mt-4 px-3">
         <h1 className="text-indigo-800 pb-3 font-semibold">
           Employee Information
         </h1>
         <Inforemployee />
       </div>
 
-      <div className="rounded-lg border-2 py-5 mt-5 px-3">
+      <div className="rounded-lg border-2 py-5 mt-4 px-3">
         <h1 className="text-indigo-800 pb-3 font-semibold">
-          Borrow - Retrun Devices
+          Borrow - Retrun Devices Information
         </h1>
         <TableBorrow />
       </div>

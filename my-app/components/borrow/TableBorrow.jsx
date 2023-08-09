@@ -27,7 +27,7 @@ function TableBorrow() {
           </div>
         </div>
       </form>
-      <table className="table-auto md:table-fixed w-full border-collapse bg-white text-left text-sm text-gray-500 mt-3">
+      <table className="table-auto max-h-20 overflow-y-auto md:table-fixed w-full border-collapse bg-white text-left text-sm text-gray-500 mt-3">
         <thead className="bg-gray-50">
           <tr className="px-3">
             <th scope="col" className="px-6 py-4 font-medium text-gray-900">
@@ -50,7 +50,7 @@ function TableBorrow() {
             </th>
           </tr>
         </thead>
-        <tbody className="divide-y divide-gray-100 border-t border-gray-100">
+        <tbody className="divide-y max-h-12 overflow-y-auto divide-gray-100 border-t border-gray-100">
           <tr>
             <td>1</td>
             <td>1</td>
@@ -69,6 +69,18 @@ function TableBorrow() {
             <td>2</td>
             <td>2</td>
             <td>2</td>
+            <td>
+              <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-60 my-3">
+                Return
+              </button>
+            </td>
+          </tr>
+          <tr>
+            <td>3</td>
+            <td>3</td>
+            <td>3</td>
+            <td>3</td>
+            <td>3</td>
             <td>
               <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-60 my-3">
                 Return
