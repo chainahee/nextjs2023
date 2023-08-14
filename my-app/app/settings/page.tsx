@@ -2,7 +2,7 @@ import Link from "next/link";
 import React from "react";
 import { TbBrandFinder } from "react-icons/tb";
 import { AiOutlineTags } from "react-icons/ai";
-import { BsBuildings, BsBriefcase } from "react-icons/bs";
+import { BsBuildings, BsBriefcase, BsPatchExclamation } from "react-icons/bs";
 
 function Settings() {
   const menuItems = [
@@ -18,7 +18,7 @@ function Settings() {
     },
     {
       href: "/settings/statusdevice",
-      icon: <AiOutlineTags />,
+      icon: <BsPatchExclamation />,
       label: "Status Device",
     },
     {
@@ -31,12 +31,19 @@ function Settings() {
       icon: <BsBuildings />,
       label: "Branch",
     },
+    {
+      href: "/settings/statusemployee",
+      icon: <BsPatchExclamation />,
+      label: "Status Employee",
+    },
   ];
 
   return (
     <div>
       <div className="flex items-center justify-center">
-        <h1 className="md:text-2xl text-xl lg:text-3xl mb-16 text-purple-600 font-bold">Setting Menu</h1>
+        <h1 className="md:text-2xl text-xl lg:text-3xl mb-16 text-purple-600 font-bold">
+          Setting Menu
+        </h1>
       </div>
       <div className="gap-7 grid md:grid-cols-2 lg:grid-cols-4 items-center">
         {menuItems.map((menuItem, index) => (
