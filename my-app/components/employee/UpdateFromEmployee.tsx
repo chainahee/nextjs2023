@@ -3,15 +3,22 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-function AddEmployee() {
-  const [employeeid, setEmployeeid] = useState("");
-  const [fullname, setFullName] = useState("");
+function UpdateFromEmployee({
+  employeeid,
+  id,
+  fullname,
+  department,
+  branch,
+  status,
+}) {
+  const [newEmployeeid, setEmployeeid] = useState(employeeid);
+  const [newFullname, setFullName] = useState(fullname);
   const [departments, setDepartments] = useState([]);
-  const [department, setDepartment] = useState("");
+  const [newDepartment, setDepartment] = useState(department);
   const [branchs, setBranchs] = useState([]);
-  const [branch, setBranch] = useState("");
+  const [newBranch, setBranch] = useState(branch);
   const [statusEmployee, setStatusEmployee] = useState([]);
-  const [status, setStatus] = useState("");
+  const [newStatus, setStatus] = useState(status);
   const router = useRouter();
 
   useEffect(() => {
@@ -67,41 +74,32 @@ function AddEmployee() {
     fetchStatus();
   }, []);
 
-  const handlerSubmit = async (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (!employeeid || !fullname || !department || !branch || !status) {
-      alert("โปรดกรอกข้อมูลให้ครบ");
-      return;
-    }
     try {
-      const res = await fetch("http://localhost:3000/api/employee", {
-        method: "POST",
+      const res = await fetch(`http://localhost:3000/api/employee/${id}`, {
+        method: "PUT",
         headers: {
           "Content-type": "application/json",
         },
         body: JSON.stringify({
-          employeeid,
-          fullname,
-          department,
-          branch,
-          status,
+          newEmployeeid,
+          newFullname,
+          newDepartment,
+          newBranch,
+          newStatus,
         }),
       });
 
-      console.log(res);
-
-      if (res.ok) {
-        router.push("/employee");
-      } else {
-        throw new Error("Failed to create a employee");
+      if (!res.ok) {
+        throw new Error("Failed to update");
       }
+      router.push("/employee");
     } catch (err) {
       console.log(err);
     }
   };
-
-  console.log(branch);
 
   return (
     <div>
@@ -111,7 +109,7 @@ function AddEmployee() {
         </h1>
       </div>
 
-      <form onSubmit={handlerSubmit}>
+      <form onSubmit={handleSubmit}>
         <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
           <div className="sm:col-span-3">
             <label
@@ -124,7 +122,7 @@ function AddEmployee() {
               type="text"
               name="employeeID"
               id="employeeID"
-              value={employeeid}
+              value={newEmployeeid}
               onChange={(e) => setEmployeeid(e.target.value)}
               placeholder="EmployeeID"
               className="mt-2 block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -141,7 +139,7 @@ function AddEmployee() {
               type="text"
               name="fullname"
               id="fullname"
-              value={fullname}
+              value={newFullname}
               onChange={(e) => setFullName(e.target.value)}
               placeholder="Full Name"
               className="mt-2 block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
@@ -161,7 +159,7 @@ function AddEmployee() {
                 id="department"
                 name="department"
                 className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                value={department}
+                value={newDepartment}
                 onChange={(e) => setDepartment(e.target.value)}
               >
                 <option value="0">Select a Department</option>
@@ -186,7 +184,7 @@ function AddEmployee() {
                 id="branch"
                 name="branch"
                 className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                value={branch}
+                value={newBranch}
                 onChange={(e) => setBranch(e.target.value)}
               >
                 <option value="0">Select a Branch</option>
@@ -209,10 +207,10 @@ function AddEmployee() {
             </label>
             <div className="mt-2">
               <select
-                id="branch"
-                name="branch"
+                id="status"
+                name="status"
                 className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                value={status}
+                value={newStatus}
                 onChange={(e) => setStatus(e.target.value)}
               >
                 <option value="0">Select a Status</option>
@@ -236,7 +234,7 @@ function AddEmployee() {
             type="submit"
             className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
           >
-            Add
+            Update
           </button>
         </div>
       </form>
@@ -244,4 +242,4 @@ function AddEmployee() {
   );
 }
 
-export default AddEmployee;
+export default UpdateFromEmployee;

@@ -83,9 +83,9 @@ async function Brand() {
           header={header}
           globalFilter={globalFilter}
           paginator
-          rows={10}
+          rows={5}
           style={{ fontSize: "15px", backgroundColor: "var(--primary-color)" }}
-          rowsPerPageOptions={[10, 25, 50]}
+          rowsPerPageOptions={[5, 10, 25, 50]}
           tableStyle={{ minWidth: "50rem" }}
         >
           <Column header="No." body={indexColumnTemplate}></Column>

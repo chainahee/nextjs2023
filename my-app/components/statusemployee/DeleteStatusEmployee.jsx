@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { FcDeleteDatabase } from "react-icons/fc";
 import { useRouter } from "next/navigation";
 
 function DeleteStatusEmployee({ id }) {
@@ -18,7 +17,7 @@ function DeleteStatusEmployee({ id }) {
   };
   return (
     <button onClick={removeBrand}>
-      <FcDeleteDatabase className="text-3xl" />
+      Delete
     </button>
   );
 }

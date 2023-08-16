@@ -1,4 +1,4 @@
-import connectMongoDB from "@/app/lib/mongodb";
+ import connectMongoDB from "@/app/lib/mongodb";
 import Device from "@/app/models/Device";
 import { NextResponse } from "next/server";
 

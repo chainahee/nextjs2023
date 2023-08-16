@@ -69,18 +69,18 @@ async function Device() {
               {devices.map((item, index) => (
                 <tr key={item._id} className="hover:bg-gray-50">
                   <td className="px-6 py-2">{index + 1}</td>
-                  <td className="px-6 py-4">{item.serial}</td>
-                  <td className="px-6 py-4">{item.name}</td>
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-2">{item.serial}</td>
+                  <td className="px-6 py-2">{item.name}</td>
+                  <td className="px-6 py-2">
                     {item.brand}
                   </td>
-                  <td className="px-6 py-4">{item.category}</td>
-                  <td className="px-6 py-4">
+                  <td className="px-6 py-2">{item.category}</td>
+                  <td className="px-6 py-2">
                     {new Date(item.endDate).toLocaleDateString("en-GB")}
                   </td>
-                  <td className="px-6 py-4">{item.status}</td>
+                  <td className="px-6 py-2">{item.status}</td>
                   <td>
-                    <div className="flex gap-2 p-2">
+                    <div className="flex gap-2">
                       <Link href={`/device/update/${item._id}`}>
                         <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                           Edit
