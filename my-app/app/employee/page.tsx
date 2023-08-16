@@ -36,37 +36,37 @@ async function Employee() {
           </Link>
         </div>
       </div>
-      <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md mt-2 mx-5">
-        <table className="table-auto md:table-fixed w-full border-collapse bg-white text-left text-sm text-gray-500">
+      <div className="overflow-x-auto rounded-lg border border-gray-200 shadow-md mt-2 mx-5 ">
+        <table className="table-auto md:table-fixed w-full border-collapse bg-white text-left text-sm text-gray-500 ">
           <thead className="bg-gray-50">
             <tr className="px-3">
-              <th scope="col" className="px-6 py-2 font-medium text-gray-900">
+              <th scope="col" className="px-6 py-2 font-semibold text-gray-900 lg:text-lg sm:text-sm">
                 No
               </th>
-              <th scope="col" className="px-6 py-4 font-medium text-gray-900">
+              <th scope="col" className="px-6 py-4 font-semibold text-gray-900 lg:text-lg sm:text-sm">
                 Employee ID
               </th>
-              <th scope="col" className="px-6 py-4 font-medium text-gray-900">
+              <th scope="col" className="px-6 py-4 font-semibold text-gray-900 lg:text-lg sm:text-sm">
                 Full Name
               </th>
-              <th scope="col" className="px-6 py-4 font-medium text-gray-900">
+              <th scope="col" className="px-6 py-4 font-semibold text-gray-900 lg:text-lg sm:text-sm">
                 Department
               </th>
-              <th scope="col" className="px-6 py-4 font-medium text-gray-900">
+              <th scope="col" className="px-6 py-4 font-semibold text-gray-900 lg:text-lg sm:text-sm">
                 Branch
               </th>
-              <th scope="col" className="px-6 py-4 font-medium text-gray-900">
+              <th scope="col" className="px-6 py-4 font-semibold text-gray-900 lg:text-lg sm:text-sm">
                 Status
               </th>
-              <th scope="col" className="px-6 py-4 font-medium text-gray-900">
+              <th scope="col" className="px-6 py-4 font-semibold text-gray-900 lg:text-lg sm:text-sm">
                 Action
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100 border-t border-gray-100">
+          <tbody className="divide-y divide-gray-100 border-t border-gray-100 overflow-x-auto">
             {employees &&
               employees.map((item, index) => (
-                <tr key={item._id} className="hover:bg-gray-50">
+                <tr key={item._id} className="hover:bg-indigo-50">
                   <td className="px-6 py-2.5 text-gray-700">{index + 1}</td>
                   <td className="px-6 py-2.5 text-gray-700">{item.employeeid}</td>
                   <td className="px-6 py-2.5 text-gray-700">{item.fullname}</td>
