@@ -8,7 +8,7 @@ function Employee() {
   const [employees, setEmployee] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const reacordsPaerPage = 7;
+  const reacordsPaerPage = 5;
   const lastIndex = currentPage * reacordsPaerPage;
   const firstIndex = lastIndex - reacordsPaerPage;
   const records = employees.slice(firstIndex, lastIndex);
@@ -136,13 +136,12 @@ function Employee() {
                     </td>
                     <td className="px-6 py-2.5 text-gray-700">{item.branch}</td>
                     <td
-                      className={`px-6 py-2.5 font-medium ${
-                        item.status === "Active"
-                          ? "text-green-500"
-                          : item.status === "Leave"
+                      className={`px-6 py-2.5 font-medium ${item.status === "Active"
+                        ? "text-green-500"
+                        : item.status === "Leave"
                           ? "text-red-500"
                           : "text-gray-700"
-                      }`}
+                        }`}
                     >
                       {item.status}
                     </td>
@@ -163,30 +162,32 @@ function Employee() {
           </tbody>
         </table>
       </div>
-      <nav className="flex mt-7 border border-indigo-800 p-2.5 rounded-full">
-        <ul className="flex items-center gap-x-5">
-          <li className="">
-            <a href="#" onClick={prePage}>
-              <span className="text-indigo-700 font-medium">Pre Page</span>
-            </a>
-          </li>
-          {numbers.map((n, i) => (
-            <li
-              className={`${currentPage === n ? "text-indigo-500" : ""}`}
-              key={i}
-            >
-              <a href="#" className="" onClick={changeCPage}>
-                {n}
+      <div className="footer flex items-center justify-between">
+        <div className="">จำนวนรายการที่พบ</div>
+        <nav className="flex mt-7 border border-indigo-800 p-2.5 rounded-full">
+          <ul className="flex items-center gap-x-5">
+            <li className="">
+              <a href="#" onClick={prePage}>
+                <span className="text-indigo-700 font-medium">Pre Page</span>
               </a>
             </li>
-          ))}
-          <li>
-            <a href="#" onClick={nextPage}>
-              <span className="text-indigo-700 font-medium">Next Pages </span>
-            </a>
-          </li>
-        </ul>
-      </nav>
+            {numbers.map((n, i) => (
+              <li
+                className={`${currentPage === n ? "text-indigo-500 bg-indigo-50 rounded-full" : ""}`}
+                key={i}
+              >
+                <a href="#" className="" onClick={changeCPage}>
+                  <span className="px-1.5 border rounded-full border-indigo-500">{n}</span>
+                </a>
+              </li>
+            ))}
+            <li>
+              <a href="#" onClick={nextPage}>
+                <span className="text-indigo-700 font-medium">Next Pages </span>
+              </a>
+            </li>
+          </ul>
+        </nav></div>
     </div>
   );
 
