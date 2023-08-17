@@ -101,7 +101,7 @@ function AddEmployee() {
     }
   };
 
-  console.log(branch);
+  console.log(fullname);
 
   return (
     <div>
