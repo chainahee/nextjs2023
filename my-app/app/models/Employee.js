@@ -11,6 +11,13 @@ const employeeSchema = new Schema(
   { timestamps: true, versionKey: false }
 );
 
+employeeSchema.pre("save", function (next) {
+  if (this.isModified("employeeid")) {
+    this.employeeid = this.employeeid.padStart(4, '0');
+  }
+  next();
+});
+
 const Employee = mongoose.models.Employee || mongoose.model("Employee", employeeSchema);
 
 export default Employee;

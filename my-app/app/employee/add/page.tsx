@@ -121,7 +121,7 @@ function AddEmployee() {
               Employee ID :
             </label>
             <input
-              type="text"
+              type="number"
               name="employeeID"
               id="employeeID"
               value={employeeid}
