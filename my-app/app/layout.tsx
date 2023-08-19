@@ -21,7 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <div className="h-screen flex flex-row justify-start">
+        <div className="max-h-screen flex flex-row justify-start">
           <Navbar />
           <div className="flex-1 p-4 bg-indigo-50">
             <div className="bg-white py-6 px-3 sm:px-6 lg:px-8 rounded-lg h-full">{children}</div>

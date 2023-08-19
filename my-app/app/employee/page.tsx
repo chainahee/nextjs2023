@@ -16,7 +16,7 @@ function Employee() {
   const [employees, setEmployee] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const reacordsPaerPage = 5;
+  const reacordsPaerPage = 10;
   const lastIndex = currentPage * reacordsPaerPage;
   const firstIndex = lastIndex - reacordsPaerPage;
   const records = employees.slice(firstIndex, lastIndex);
@@ -92,13 +92,13 @@ function Employee() {
         </div>
       </form>
 
-      <div className="overflow-x-auto overflow-hidden rounded-lg border border-gray-200 shadow-md mt-2 mx-5 ">
+      <div className=" overflow-scroll h-[400px] rounded-lg border border-gray-200 shadow-md mt-2 mx-5 ">
         <table className="table-fixed w-full border-collapse bg-white text-left text-sm text-gray-500 ">
           <thead className="bg-gray-50">
             <tr className="px-3">
               <th
                 scope="col"
-                className="px-6 py-2 font-semibold text-gray-900 lg:text-base sm:text-sm"
+                className="px-6 py-2 w-20 font-semibold text-gray-900 lg:text-base sm:text-sm"
               >
                 No
               </th>
@@ -110,13 +110,13 @@ function Employee() {
               </th>
               <th
                 scope="col"
-                className="px-6 py-4 font-semibold text-gray-900 lg:text-base sm:text-sm"
+                className="px-6 py-4 w-60 font-semibold text-gray-900 lg:text-base sm:text-sm"
               >
                 Full Name
               </th>
               <th
                 scope="col"
-                className="px-6 py-4  font-semibold text-gray-900 lg:text-base sm:text-sm"
+                className="px-6 py-4 w-60 font-semibold text-gray-900 lg:text-base sm:text-sm"
               >
                 Department
               </th>
