@@ -16,7 +16,7 @@ function Employee() {
   const [employees, setEmployee] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
-  const reacordsPaerPage = 10;
+  const reacordsPaerPage = 20;
   const lastIndex = currentPage * reacordsPaerPage;
   const firstIndex = lastIndex - reacordsPaerPage;
   const records = employees.slice(firstIndex, lastIndex);
@@ -92,7 +92,7 @@ function Employee() {
         </div>
       </form>
 
-      <div className=" overflow-scroll h-[400px] rounded-lg border border-gray-200 shadow-md mt-2 mx-5 ">
+      <div className=" overflow-scroll h-[350px] rounded-lg border border-gray-200 shadow-md mt-2 mx-5 ">
         <table className="table-fixed w-full border-collapse bg-white text-left text-sm text-gray-500 ">
           <thead className="bg-gray-50">
             <tr className="px-3">
@@ -201,8 +201,8 @@ function Employee() {
             {currentPage !== 1 && (
               <li>
                 <Link href="#" onClick={() => gotoPage(1)}>
-                  <span className="text-indigo-700 font-medium">
-                    <MdKeyboardDoubleArrowLeft className="text-2xl" />{" "}
+                  <span className="text-indigo-700 font-medium flex">
+                    <MdKeyboardDoubleArrowLeft className="text-2xl border border-indigo-500 rounded-full" />{" "}
                   </span>
                 </Link>
               </li>
@@ -210,8 +210,8 @@ function Employee() {
             {currentPage > 1 && (
               <li className="">
                 <Link href="#" onClick={prePage}>
-                  <span className="text-indigo-700 font-medium">
-                    <MdOutlineKeyboardArrowLeft className="text-2xl" />
+                  <span className="text-indigo-700 font-medium flex">
+                    <MdOutlineKeyboardArrowLeft className="text-2xl border border-indigo-500 rounded-full" />
                   </span>
                 </Link>
               </li>
@@ -220,13 +220,13 @@ function Employee() {
               <li
                 className={`${
                   currentPage === n
-                    ? "text-indigo-500 bg-indigo-50 rounded-full"
+                    ? "text-indigo-500 bg-indigo-200 rounded-full"
                     : ""
                 }`}
                 key={i}
               >
                 <Link href="#" onClick={() => gotoPage(n)}>
-                  <span className="px-1.5 border rounded-full border-indigo-500 text-indigo-700 font-medium hover:bg-indigo-300">
+                  <span className="px-1.5 border rounded-full border-indigo-500 text-indigo-700 font-medium hover:bg-indigo-400">
                     {n}
                   </span>
                 </Link>
@@ -236,8 +236,8 @@ function Employee() {
             {currentPage < npage && (
               <li>
                 <Link href="#" onClick={nextPage}>
-                  <span className="text-indigo-700 font-medium">
-                    <MdOutlineKeyboardArrowRight className="text-2xl" />{" "}
+                  <span className="text-indigo-700 font-medium flex">
+                    <MdOutlineKeyboardArrowRight className="text-2xl border border-indigo-500 rounded-full" />{" "}
                   </span>
                 </Link>
               </li>
@@ -246,8 +246,8 @@ function Employee() {
             {currentPage !== npage && (
               <li>
                 <Link href="#" onClick={() => gotoPage(npage)}>
-                  <span className="text-indigo-700 font-medium">
-                    <MdKeyboardDoubleArrowRight className="text-2xl" />{" "}
+                  <span className="text-indigo-700 font-medium flex">
+                    <MdKeyboardDoubleArrowRight className="text-2xl border border-indigo-500 rounded-full" />{" "}
                   </span>
                 </Link>
               </li>
