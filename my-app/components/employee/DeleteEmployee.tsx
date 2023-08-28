@@ -1,6 +1,5 @@
 "use client";
 import React from "react";
-import { FcDeleteDatabase } from "react-icons/fc";
 import { useRouter } from "next/navigation";
 
 function DeleteEmployee({ id }) {

@@ -8,6 +8,7 @@ import { DataTable } from "primereact/datatable";
 import { Column } from "primereact/column";
 import DeleteBrand from "@/components/brand/DeleteBrand";
 
+
 const getBrands = async () => {
   try {
     const res = await fetch("http://localhost:3000/api/brand", {
@@ -86,7 +87,8 @@ async function Brand() {
               backgroundColor: "var(--primary-color)",
             }}
             rowsPerPageOptions={[10, 25, 50]}
-            tableStyle={{ minWidth: "50rem" }}
+            tableStyle={{ minWidth: "50rem", height: "50px" }}
+            
           >
             <Column header="No." body={indexColumnTemplate}></Column>
             <Column field="brand_id" header="Brand ID" sortable></Column>

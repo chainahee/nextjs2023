@@ -1,11 +1,9 @@
 "use client";
 import Link from "next/link";
 
-import React, { useState } from "react";
+import React from "react";
 import { BsDatabaseAdd } from "react-icons/bs";
 import { FcEditImage, FcSearch } from "react-icons/fc";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
 import DeleteBranch from "@/components/branch/DeleteBranch";
 
 const getBranchs = async () => {
@@ -25,7 +23,6 @@ const getBranchs = async () => {
 };
 
 async function Brand() {
-  const [globalFilter, setGlobalFilter] = useState(null);
   const { branchs } = await getBranchs();
   const indexColumnTemplate = (rowData, column) => {
     return column.rowIndex + 1;
@@ -75,23 +72,50 @@ async function Brand() {
       </div>
 
       <hr className="my-6" />
-      <div className="flex items-center justify-center max-w-4xl mx-auto">
-        <DataTable
-          value={branchs}
-          showGridlines
-          stripedRows
-          header={header}
-          globalFilter={globalFilter}
-          paginator
-          rows={5}
-          style={{ fontSize: "15px", backgroundColor: "var(--primary-color)" }}
-          rowsPerPageOptions={[5, 10, 25, 50]}
-          tableStyle={{ minWidth: "50rem" }}
-        >
-          <Column header="No." body={indexColumnTemplate}></Column>
-          <Column field="name" header="Name" sortable></Column>
-          <Column body={actionBodyTemplate} header="Action"></Column>
-        </DataTable>
+      <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md mt-2 mx-5 ">
+        <table className="table-fixed w-full border-collapse bg-white text-left text-sm text-gray-500 ">
+          <thead className="bg-gray-50">
+            <tr className="px-3">
+              <th
+                scope="col"
+                className="px-6 py-2 font-semibold text-gray-900 lg:text-base sm:text-sm"
+              >
+                No
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-4 font-semibold text-gray-900 lg:text-base sm:text-sm"
+              >
+                Branch Name
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-4 font-semibold text-gray-900 lg:text-base sm:text-sm"
+              >
+                Action
+              </th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-100 border-t border-gray-100 overflow-x-auto">
+            {branchs &&
+              branchs.map((item, index) => (
+                <tr key={item._id} className="hover:bg-indigo-50">
+                  <td className="px-6 py-2.5 text-gray-700">{index + 1}</td>
+                  <td className="px-6 py-2.5 text-gray-700">{item.name}</td>
+
+                  <td>
+                    <div className="flex gap-2">
+                      <Link href={`/employee/update/${item._id}`}>
+                        <button className="rounded-md bg-yellow-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-yellow-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600">
+                          Edit
+                        </button>
+                      </Link>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );
