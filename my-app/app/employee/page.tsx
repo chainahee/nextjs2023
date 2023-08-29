@@ -37,22 +37,23 @@ function Employee() {
           throw new Error("Failed to fetch employees");
         }
         const data = await response.json();
-        
+
         // แปลง employeeid เป็น string ก่อนเรียงลำดับ
-        const sortedEmployees = data.employees.map(employee => ({
-          ...employee,
-          employeeid: employee.employeeid.toString(),
-        })).sort((a, b) => a.employeeid.localeCompare(b.employeeid));
-  
+        const sortedEmployees = data.employees
+          .map((employee) => ({
+            ...employee,
+            employeeid: employee.employeeid.toString(),
+          }))
+          .sort((a, b) => a.employeeid.localeCompare(b.employeeid));
+
         setEmployee(sortedEmployees);
       } catch (error) {
         console.log("Error loading employees", error);
       }
     };
-  
+
     fetchEmployee();
   }, []);
-  
 
   const employeeCount = employees.length;
 
@@ -92,13 +93,13 @@ function Employee() {
         </div>
       </form>
 
-      <div className=" overflow-scroll h-[350px] rounded-lg border border-gray-200 shadow-md mt-2 mx-5 ">
+      <div className="overflow-scroll h-[350px] w-full rounded-lg border border-gray-200 shadow-md mt-2 mx-5 ">
         <table className="table-fixed w-full border-collapse bg-white text-left text-sm text-gray-500 ">
           <thead className="bg-gray-50">
-            <tr className="px-3">
+            <tr className="">
               <th
                 scope="col"
-                className="px-6 py-2 w-20 font-semibold text-gray-900 lg:text-base sm:text-sm"
+                className="px-6 py-2 font-semibold text-gray-900 lg:text-base sm:text-sm"
               >
                 No
               </th>
@@ -110,13 +111,13 @@ function Employee() {
               </th>
               <th
                 scope="col"
-                className="px-6 py-4 w-60 font-semibold text-gray-900 lg:text-base sm:text-sm"
+                className="px-6 py-4 font-semibold text-gray-900 lg:text-base sm:text-sm"
               >
                 Full Name
               </th>
               <th
                 scope="col"
-                className="px-6 py-4 w-60 font-semibold text-gray-900 lg:text-base sm:text-sm"
+                className="px-6 py-4 font-semibold text-gray-900 lg:text-base sm:text-sm"
               >
                 Department
               </th>
@@ -167,16 +168,18 @@ function Employee() {
                       {item.department}
                     </td>
                     <td className="px-6 py-2.5 text-gray-700">{item.branch}</td>
-                    <td
-                      className={`px-6 py-2.5 font-medium ${
-                        item.status === "Active"
-                          ? "text-lime-500"
-                          : item.status === "Leave"
-                          ? "text-red-500"
-                          : "text-gray-700"
-                      }`}
-                    >
-                      {item.status}
+                    <td className="px-6 py-2.5 font-medium">
+                      <span
+                        className={` ${
+                          item.status === "Active"
+                            ? "text-lime-500 hover:bg-lime-100 border border-lime-300 px-2 py-1 rounded-xl"
+                            : item.status === "Leave"
+                            ? "text-red-500 hover:bg-red-200 border border-red-300 px-2 py-1 rounded-xl"
+                            : "text-gray-700"
+                        }`}
+                      >
+                        {item.status}
+                      </span>
                     </td>
                     <td>
                       <div className="flex gap-2">

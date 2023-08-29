@@ -1,6 +1,7 @@
 "use client";
 import React from "react";
 import { useRouter } from "next/navigation";
+import { BsTrash } from "react-icons/bs";
 
 function DeleteEmployee({ id }) {
   const router = useRouter();
@@ -16,8 +17,12 @@ function DeleteEmployee({ id }) {
     }
   };
   return (
-    <button onClick={removeEmployee} className="rounded-md bg-red-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
-      Delete
+    <button
+      onClick={removeEmployee}
+      className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10 gap-2"
+    >
+      {" "}
+      Delete <BsTrash className="text-lg" />
     </button>
   );
 }
