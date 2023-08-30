@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import DeleteEmployee from "@/components/employee/DeleteEmployee";
+import { BsPencilSquare } from "react-icons/bs";
 
 // icon
 import {
@@ -23,6 +24,7 @@ function Employee() {
   const npage = Math.ceil(employees.length / reacordsPaerPage);
   const numbers = Array.from({ length: npage }, (_, i) => i + 1);
   const startIndex = (currentPage - 1) * reacordsPaerPage;
+  const employeeCount = employees.length;
   const gotoPage = (page) => {
     if (page >= 1 && page <= npage) {
       setCurrentPage(page);
@@ -55,20 +57,16 @@ function Employee() {
     fetchEmployee();
   }, []);
 
-  const employeeCount = employees.length;
-
-  console.log(employees);
-
   return (
     <div className="grid place-items-center bg-white">
       <div className="text-center">
-        <p className="text-3xl font-bold text-indigo-600">
+        <p className="sm:text-3xl font-bold text-indigo-600 text-xl">
           Employee Management
         </p>
         <div className="my-3">
           <Link
             href={"/employee/add"}
-            className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+            className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:px-4 sm:py-2 md:text-base md:px-4 md:py-2 lg:text-lg lg:px-4.5 lg:py-2.5"
           >
             Add Employee
           </Link>
@@ -86,7 +84,7 @@ function Employee() {
             className="mt-2 block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
           />
         </div>
-        <div className="text-gray-800">
+        <div className="text-sm text-indigo-600">
           Showing {startIndex + 1} to{" "}
           {Math.min(startIndex + reacordsPaerPage, employeeCount)} of{" "}
           {employeeCount} results
@@ -94,48 +92,48 @@ function Employee() {
       </form>
 
       <div className="overflow-scroll h-[350px] w-full rounded-lg border border-gray-200 shadow-md mt-2 mx-5 ">
-        <table className="table-fixed w-full border-collapse bg-white text-left text-sm text-gray-500 ">
+        <table className="w-full border-collapse bg-white text-left text-sm text-gray-500 ">
           <thead className="bg-gray-50">
             <tr className="">
               <th
-                scope="col"
-                className="px-6 py-2 font-semibold text-gray-900 lg:text-base sm:text-sm"
+                scope="col-3"
+                className="px-6 py-2 text-gray-900 lg:text-base sm:text-sm"
               >
                 No
               </th>
               <th
-                scope="col"
-                className="px-6 py-4 font-semibold text-gray-900 lg:text-base sm:text-sm"
+                scope="col-2"
+                className="px-6 py-4 text-gray-900 lg:text-base sm:text-sm"
               >
                 Employee ID
               </th>
               <th
                 scope="col"
-                className="px-6 py-4 font-semibold text-gray-900 lg:text-base sm:text-sm"
+                className="px-6 py-4 text-gray-900 lg:text-base sm:text-sm"
               >
                 Full Name
               </th>
               <th
                 scope="col"
-                className="px-6 py-4 font-semibold text-gray-900 lg:text-base sm:text-sm"
+                className="px-6 py-4 text-gray-900 lg:text-base sm:text-sm"
               >
                 Department
               </th>
               <th
                 scope="col"
-                className="px-6 py-4 font-semibold text-gray-900 lg:text-base sm:text-sm"
+                className="px-6 py-4 text-gray-900 lg:text-base sm:text-sm"
               >
                 Branch
               </th>
               <th
                 scope="col"
-                className="px-6 py-4 font-semibold text-gray-900 lg:text-base sm:text-sm"
+                className="px-6 py-4 text-gray-900 lg:text-base sm:text-sm"
               >
                 Status
               </th>
               <th
                 scope="col"
-                className="px-6 py-4 font-semibold text-gray-900 lg:text-base sm:text-sm"
+                className="px-6 py-4 text-gray-900 lg:text-base sm:text-sm"
               >
                 Action
               </th>
@@ -168,13 +166,13 @@ function Employee() {
                       {item.department}
                     </td>
                     <td className="px-6 py-2.5 text-gray-700">{item.branch}</td>
-                    <td className="px-6 py-2.5 font-medium">
+                    <td className="px-6 py-2.5">
                       <span
                         className={` ${
                           item.status === "Active"
-                            ? "text-lime-500 hover:bg-lime-100 border border-lime-300 px-2 py-1 rounded-xl"
+                            ? "inline-flex items-center rounded-md bg-green-50 px-2 py-1 text-sm font-medium text-green-700 ring-1 ring-inset ring-green-600/20"
                             : item.status === "Leave"
-                            ? "text-red-500 hover:bg-red-200 border border-red-300 px-2 py-1 rounded-xl"
+                            ? "inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-sm font-medium text-red-700 ring-1 ring-inset ring-red-600/10 gap-2"
                             : "text-gray-700"
                         }`}
                       >
@@ -182,10 +180,10 @@ function Employee() {
                       </span>
                     </td>
                     <td>
-                      <div className="flex gap-2">
+                      <div className="flex justify-center gap-2">
                         <Link href={`/employee/update/${item._id}`}>
-                          <button className="rounded-md bg-yellow-600 px-3 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-yellow-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-yellow-600">
-                            Edit
+                          <button className="gap-2 inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-sm font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
+                            Edit <BsPencilSquare className="text-lg" />
                           </button>
                         </Link>
                         <div className="">
@@ -198,65 +196,98 @@ function Employee() {
           </tbody>
         </table>
       </div>
-      <div className="px-4 py-5 sm:px-6">
-        <nav className="flex border border-indigo-800 p-2.5 rounded-full">
-          <ul className="flex items-center gap-x-5">
-            {currentPage !== 1 && (
-              <li>
-                <Link href="#" onClick={() => gotoPage(1)}>
-                  <span className="text-indigo-700 font-medium flex">
-                    <MdKeyboardDoubleArrowLeft className="text-2xl border border-indigo-500 rounded-full" />{" "}
-                  </span>
-                </Link>
-              </li>
-            )}
-            {currentPage > 1 && (
-              <li className="">
-                <Link href="#" onClick={prePage}>
-                  <span className="text-indigo-700 font-medium flex">
-                    <MdOutlineKeyboardArrowLeft className="text-2xl border border-indigo-500 rounded-full" />
-                  </span>
-                </Link>
-              </li>
-            )}
-            {numbers.map((n, i) => (
-              <li
-                className={`${
-                  currentPage === n
-                    ? "text-indigo-500 bg-indigo-200 rounded-full"
-                    : ""
-                }`}
-                key={i}
-              >
-                <Link href="#" onClick={() => gotoPage(n)}>
-                  <span className="px-1.5 border rounded-full border-indigo-500 text-indigo-700 font-medium hover:bg-indigo-400">
-                    {n}
-                  </span>
-                </Link>
-              </li>
-            ))}
+      <div className="flex items-center justify-between border-gray-200 bg-white px-4 py-3 sm:px-6 mt-5 w-full">
+        <div className="flex flex-1 justify-between sm:hidden">
+          <button
+            onClick={() => {
+              if (currentPage !== firstIndex) {
+                prePage();
+              }
+            }}
+            className={`relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium ${
+              currentPage === 1
+                ? "text-gray-300 cursor-not-allowed"
+                : "text-purple-700 hover:bg-gray-50"
+            }`}
+            disabled={currentPage === 1}
+          >
+            Previous
+          </button>
+          <button
+            onClick={() => {
+              if (currentPage !== lastIndex && currentPage !== npage) {
+                nextPage();
+              }
+            }}
+            className={`relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium ${
+              currentPage === lastIndex || currentPage === npage
+                ? "text-gray-300 cursor-not-allowed"
+                : "text-pink-700 hover:bg-gray-50"
+            }`}
+            disabled={currentPage === lastIndex || currentPage === npage}
+          >
+            Next
+          </button>
+        </div>
 
-            {currentPage < npage && (
-              <li>
-                <Link href="#" onClick={nextPage}>
-                  <span className="text-indigo-700 font-medium flex">
-                    <MdOutlineKeyboardArrowRight className="text-2xl border border-indigo-500 rounded-full" />{" "}
+        <div className="hidden sm:flex sm:flex-1 justify-center">
+          <nav>
+            <ul className="flex items-center gap-x-5">
+              {currentPage !== 1 && (
+                <li>
+                  <span onClick={() => gotoPage(1)}>
+                    <span className="text-indigo-700 font-medium flex cursor-pointer hover:bg-indigo-200 rounded-full">
+                      <MdKeyboardDoubleArrowLeft className="text-2xl border border-indigo-500 rounded-full" />{" "}
+                    </span>
                   </span>
-                </Link>
-              </li>
-            )}
+                </li>
+              )}
+              {currentPage > 1 && (
+                <li className="">
+                  <span onClick={prePage}>
+                    <span className="text-indigo-700 font-medium flex cursor-pointer hover:bg-indigo-200 rounded-full">
+                      <MdOutlineKeyboardArrowLeft className="text-2xl border border-indigo-500 rounded-full" />
+                    </span>
+                  </span>
+                </li>
+              )}
+              {numbers.map((n, i) => (
+                <li
+                  className={`${
+                    currentPage === n
+                      ? "text-white bg-indigo-600 rounded-full cursor-pointer"
+                      : "text-indigo-600 hover:bg-indigo-200 rounded-full"
+                  }`}
+                  key={i}
+                >
+                  <span onClick={() => gotoPage(n)}>
+                    <span className="p-2 cursor-pointer">{n}</span>
+                  </span>
+                </li>
+              ))}
 
-            {currentPage !== npage && (
-              <li>
-                <Link href="#" onClick={() => gotoPage(npage)}>
-                  <span className="text-indigo-700 font-medium flex">
-                    <MdKeyboardDoubleArrowRight className="text-2xl border border-indigo-500 rounded-full" />{" "}
+              {currentPage < npage && (
+                <li>
+                  <span onClick={nextPage}>
+                    <span className="text-indigo-700 font-medium flex cursor-pointer hover:bg-indigo-200 rounded-full">
+                      <MdOutlineKeyboardArrowRight className="text-2xl border border-indigo-500 rounded-full" />{" "}
+                    </span>
                   </span>
-                </Link>
-              </li>
-            )}
-          </ul>
-        </nav>
+                </li>
+              )}
+
+              {currentPage !== npage && (
+                <li>
+                  <span onClick={() => gotoPage(npage)}>
+                    <span className="text-indigo-700 font-medium flex cursor-pointer hover:bg-indigo-200 rounded-full">
+                      <MdKeyboardDoubleArrowRight className="text-2xl border border-indigo-500 rounded-full" />{" "}
+                    </span>
+                  </span>
+                </li>
+              )}
+            </ul>
+          </nav>
+        </div>
       </div>
     </div>
   );

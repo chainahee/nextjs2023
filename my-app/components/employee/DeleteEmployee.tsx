@@ -19,7 +19,7 @@ function DeleteEmployee({ id }) {
   return (
     <button
       onClick={removeEmployee}
-      className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10 gap-2"
+      className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-sm font-medium text-red-700 ring-1 ring-inset ring-red-600/10 gap-2"
     >
       {" "}
       Delete <BsTrash className="text-lg" />
