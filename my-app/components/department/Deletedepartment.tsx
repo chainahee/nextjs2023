@@ -1,6 +1,6 @@
 "use client";
 import React from "react";
-import { FcDeleteDatabase } from "react-icons/fc";
+import { BsTrash } from "react-icons/bs";
 import { useRouter } from "next/navigation";
 
 function DeleteDepartment({ id }) {
@@ -17,8 +17,12 @@ function DeleteDepartment({ id }) {
     }
   };
   return (
-    <button onClick={removeBrand}>
-      <FcDeleteDatabase className="text-3xl" />
+    <button
+      onClick={removeBrand}
+      className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-sm font-medium text-red-700 ring-1 ring-inset ring-red-600/10 gap-2"
+    >
+      {" "}
+      Delete <BsTrash className="text-lg" />
     </button>
   );
 }

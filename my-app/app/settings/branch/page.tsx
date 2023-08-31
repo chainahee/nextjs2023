@@ -2,9 +2,7 @@
 import Link from "next/link";
 
 import React from "react";
-import { BsDatabaseAdd } from "react-icons/bs";
-import { FcEditImage } from "react-icons/fc";
-import { FiEdit } from "react-icons/fi";
+import { BsDatabaseAdd, BsPencilSquare } from "react-icons/bs";
 import DeleteBranch from "@/components/branch/DeleteBranch";
 
 const getBranchs = async () => {
@@ -27,41 +25,28 @@ async function Brand() {
   const { branchs } = await getBranchs();
   const branchsCount = branchs.length;
 
-  const actionBodyTemplate = (rowData) => {
-    return (
-      <React.Fragment>
-        <div className="flex gap-4">
-          <Link href={`/settings/branch/update/${rowData._id}`}>
-            <FcEditImage className="text-3xl" />
-          </Link>
-
-          <DeleteBranch id={rowData._id} />
-        </div>
-      </React.Fragment>
-    );
-  };
-
   return (
     <div className="grid place-items-center bg-white">
       <div className="text-center">
         <p className="text-3xl font-bold text-indigo-600">Branch Management</p>
         <div className="my-3">
           <Link href={"/settings/branch/add"}>
-            <button className="px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-[#1AE18B] to-[#00D392] hover:from-[#25C37F] hover:to-[#00894E]">
+            <button className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:px-4 sm:py-2 md:text-base md:px-4 md:py-2 lg:text-lg lg:px-4.5 lg:py-2.5">
               <span className="flex items-center gap-2 text-white">
                 {" "}
                 Add Branch
-                <BsDatabaseAdd className="text-lg" />
+                <BsDatabaseAdd />
               </span>
             </button>
           </Link>
         </div>
       </div>
-
-      <div className="text-gray-800 font-medium">Showing {branchsCount} results.</div>
-      <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md mt-2 mx-5 ">
-        <table className="table-fixed w-[700px] border-collapse bg-white text-left text-sm text-gray-500 ">
-          <thead className="bg-gray-50">
+      <div className="text-xs md:text-sm lg:text-base text-indigo-600">
+        Showing {branchsCount} results.
+      </div>
+      <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md mt-2">
+        <table className="table-auto w-[700px] border-collapse bg-white text-left text-sm text-gray-500 ">
+          <thead className="bg-indigo-50">
             <tr className="">
               <th
                 scope="col"
@@ -86,20 +71,20 @@ async function Brand() {
           <tbody className="divide-y divide-gray-100 border-t border-gray-100 overflow-x-auto">
             {branchs &&
               branchs.map((item, index) => (
-                <tr key={item._id} className="hover:bg-indigo-50">
+                <tr key={item._id} className="hover:bg-indigo-100">
                   <td className="px-6 py-2.5 text-gray-700">{index + 1}</td>
                   <td className="px-6 py-2.5 text-gray-700">{item.name}</td>
 
                   <td>
                     <div className="flex gap-2">
                       <Link href={`/settings/branch/update/${item._id}`}>
-                        <button className="px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-[#FFD048] to-[#FF9848] hover:from-[#E3B93D] hover:to-[#EC6F0E]">
-                          <span className="text-white font-medium flex items-center gap-2">Edit <FiEdit className="text-lg" /> </span>
+                        <button className="gap-2 inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-sm font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
+                          Update <BsPencilSquare className="text-lg" />
                         </button>
                       </Link>
                       <div className="">
-                          <DeleteBranch id={item._id} />
-                        </div>
+                        <DeleteBranch id={item._id} />
+                      </div>
                     </div>
                   </td>
                 </tr>

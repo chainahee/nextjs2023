@@ -1,7 +1,7 @@
 "use client";
 import React from "react";
 import { useRouter } from "next/navigation";
-import { BsTrash } from 'react-icons/bs';
+import { BsTrash } from "react-icons/bs";
 
 function DeleteBranch({ id }) {
   const router = useRouter();
@@ -19,11 +19,9 @@ function DeleteBranch({ id }) {
   return (
     <button
       onClick={removeBrand}
-      className="px-3.5 py-1.5 rounded-lg bg-gradient-to-r from-[#FA8072] to-[#FC799F] hover:from-[#CD5C5C] hover:to-[#D63A67]"
+      className="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-sm font-medium text-red-700 ring-1 ring-inset ring-red-600/10 gap-2"
     >
-      <span className="text-white font-medium flex items-center gap-2">
-        Delete <BsTrash className="text-lg" />
-      </span>
+      Delete <BsTrash className="text-lg" />
     </button>
   );
 }

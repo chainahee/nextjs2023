@@ -1,11 +1,8 @@
 "use client";
 import Link from "next/link";
 
-import React, { useState } from "react";
-import { BsDatabaseAdd } from "react-icons/bs";
-import { FcEditImage, FcSearch } from "react-icons/fc";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
+import React from "react";
+import { BsDatabaseAdd, BsPencilSquare } from "react-icons/bs";
 import DeleteStatusDevice from "@/components/statusdevice/DeleteStatusDevice";
 
 const getStatus = async () => {
@@ -25,75 +22,77 @@ const getStatus = async () => {
 };
 
 async function StatusDevice() {
-  const [globalFilter, setGlobalFilter] = useState(null);
   const { statusdevices } = await getStatus();
-  const indexColumnTemplate = (rowData, column) => {
-    return column.rowIndex + 1;
-  };
-
-  const actionBodyTemplate = (rowData) => {
-    return (
-      <React.Fragment>
-        <div className="flex gap-4">
-          <Link href={`/settings/statusdevice/update/${rowData._id}`}>
-            <FcEditImage className="text-3xl" />
-          </Link>
-
-          <DeleteStatusDevice id={rowData._id} />
-        </div>
-      </React.Fragment>
-    );
-  };
-
-  const header = (
-    <div className="flex flex-wrap gap-2 items-center justify-end">
-      <span className="flex items-center">
-        <FcSearch />
-        <input
-          type="search"
-          onInput={(e) => setGlobalFilter(e.target.value)}
-          placeholder="Search......"
-          className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-        ></input>
-      </span>
-    </div>
-  );
+  const statusdevicesCount = statusdevices.length;
 
   return (
-    <div className="max-w-4xl mx-auto mt-5">
-      <div className="bg-red-50 p-3 flex items-center justify-between rounded-lg">
-        <h1 className="text-xl text-purple-600 font-bold">
-          Manage Status Device.
-        </h1>
-        <Link href={"/settings/statusdevice/add"}>
-          <button className="bg-purple-400 rounded-lg border hover:border-purple-400 hover:bg-white ">
-            <span className="flex items-center px-5 py-2 gap-2 text-white hover:text-purple-700">
-              {" "}
-              Add Status Device
-              <BsDatabaseAdd />
-            </span>
-          </button>
-        </Link>
+    <div className="grid place-items-center bg-white">
+      <div className="text-center">
+        <p className="text-3xl font-bold text-indigo-600">
+          Status Device Management
+        </p>
+        <div className="my-3">
+          <Link href={"/settings/statusdevice/add"}>
+            <button className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:px-4 sm:py-2 md:text-base md:px-4 md:py-2 lg:text-lg lg:px-4.5 lg:py-2.5">
+              <span className="flex items-center gap-2 text-white">
+                {" "}
+                Add Status Device
+                <BsDatabaseAdd />
+              </span>
+            </button>
+          </Link>
+        </div>
       </div>
+      <div className="text-xs md:text-sm lg:text-base text-indigo-600">
+        Showing {statusdevicesCount} results.
+      </div>
+      <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md mt-2">
+        <table className="table-auto w-[700px] border-collapse bg-white text-left text-sm text-gray-500 ">
+          <thead className="bg-indigo-50">
+            <tr className="">
+              <th
+                scope="col"
+                className="px-6 py-2 font-semibold text-gray-900 lg:text-base sm:text-sm"
+              >
+                No
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-4 font-semibold text-gray-900 lg:text-base sm:text-sm"
+              >
+                Branch Name
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-4 font-semibold text-gray-900 lg:text-base sm:text-sm"
+              >
+                Action
+              </th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-100 border-t border-gray-100 overflow-x-auto">
+            {statusdevices &&
+              statusdevices.map((item, index) => (
+                <tr key={item._id} className="hover:bg-indigo-100">
+                  <td className="px-6 py-2.5 text-gray-700">{index + 1}</td>
+                  <td className="px-6 py-2.5 text-gray-700">{item.name}</td>
 
-      <hr className="my-6" />
-      <div className="flex items-center justify-center max-w-4xl mx-auto">
-        <DataTable
-          value={statusdevices}
-          showGridlines
-          stripedRows
-          header={header}
-          globalFilter={globalFilter}
-          paginator
-          rows={10}
-          style={{ fontSize: "15px", backgroundColor: "var(--primary-color)" }}
-          rowsPerPageOptions={[10, 25, 50]}
-          tableStyle={{ minWidth: "50rem" }}
-        >
-          <Column header="No." body={indexColumnTemplate}></Column>
-          <Column field="name" header="Name" sortable></Column>
-          <Column body={actionBodyTemplate} header="Action"></Column>
-        </DataTable>
+                  <td>
+                    <div className="flex gap-2">
+                      <Link href={`/settings/statusdevice/update/${item._id}`}>
+                        <button className="gap-2 inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-sm font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
+                          Update <BsPencilSquare className="text-lg" />
+                        </button>
+                      </Link>
+                      <div className="">
+                        <DeleteStatusDevice id={item._id} />
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

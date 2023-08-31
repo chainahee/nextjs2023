@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import DeleteEmployee from "@/components/employee/DeleteEmployee";
-import { BsPencilSquare } from "react-icons/bs";
+import { BsPencilSquare, BsSearch } from "react-icons/bs";
 
 // icon
 import {
@@ -13,7 +13,6 @@ import {
 } from "react-icons/md";
 
 function Employee() {
-  const [search, setSearch] = useState("");
   const [employees, setEmployee] = useState([]);
 
   const [currentPage, setCurrentPage] = useState(1);
@@ -60,7 +59,7 @@ function Employee() {
   return (
     <div className="grid place-items-center bg-white">
       <div className="text-center">
-        <p className="sm:text-3xl font-bold text-indigo-600 text-xl">
+        <p className="sm:text-2xl font-bold text-indigo-600 text-xl">
           Employee Management
         </p>
         <div className="my-3">
@@ -72,28 +71,27 @@ function Employee() {
           </Link>
         </div>
       </div>
-      <form>
-        <div className="flex items-center justify-center my-2">
-          <input
-            type="text"
-            id="search"
-            name="search"
-            value={search}
-            onChange={(e) => setSearch(e.target.value)}
-            placeholder="Search anythings"
-            className="mt-2 block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-          />
-        </div>
-        <div className="text-sm text-indigo-600">
+
+      <div className="flex justify-between items-center w-full">
+        <div className="text-xs md:text-sm lg:text-base text-indigo-600">
           Showing {startIndex + 1} to{" "}
           {Math.min(startIndex + reacordsPaerPage, employeeCount)} of{" "}
           {employeeCount} results
         </div>
-      </form>
+        <Link
+          href={"employee/search"}
+          className="rounded-md bg-indigo-600 px-3 py-1.5 text-xs text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:px-4 sm:py-2 md:text-sm md:px-4 md:py-2 lg:text-base lg:px-4 lg:py-2 flex gap-2 items-center"
+        >
+          Search{" "}
+          <span>
+            <BsSearch />
+          </span>
+        </Link>
+      </div>
 
-      <div className="overflow-scroll h-[350px] w-full rounded-lg border border-gray-200 shadow-md mt-2 mx-5 ">
-        <table className="w-full border-collapse bg-white text-left text-sm text-gray-500 ">
-          <thead className="bg-gray-50">
+      <div className="overflow-scroll h-[350px] w-full rounded-lg border border-gray-200 shadow-md mt-2">
+        <table className="w-full border-collapse bg-white text-left text-xs md:text-sm text-gray-500 ">
+          <thead className="bg-indigo-50">
             <tr className="">
               <th
                 scope="col-3"
@@ -142,17 +140,9 @@ function Employee() {
           <tbody className="divide-y divide-gray-100 border-t border-gray-100 overflow-x-auto">
             {records &&
               records
-                .filter((item) => {
-                  return (
-                    search.toLowerCase() === "" ||
-                    Object.values(item).some((val) =>
-                      val.toString().toLowerCase().includes(search)
-                    )
-                  );
-                })
                 .sort((a, b) => a.employeeid.localeCompare(b.employeeid))
                 .map((item, index) => (
-                  <tr key={item._id} className="hover:bg-indigo-50">
+                  <tr key={item._id} className="hover:bg-indigo-100">
                     <td className="px-6 py-2.5 text-gray-700">
                       {startIndex + index + 1}
                     </td>
@@ -183,7 +173,7 @@ function Employee() {
                       <div className="flex justify-center gap-2">
                         <Link href={`/employee/update/${item._id}`}>
                           <button className="gap-2 inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-sm font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
-                            Edit <BsPencilSquare className="text-lg" />
+                            Update <BsPencilSquare className="text-lg" />
                           </button>
                         </Link>
                         <div className="">
@@ -237,7 +227,7 @@ function Employee() {
                 <li>
                   <span onClick={() => gotoPage(1)}>
                     <span className="text-indigo-700 font-medium flex cursor-pointer hover:bg-indigo-200 rounded-full">
-                      <MdKeyboardDoubleArrowLeft className="text-2xl border border-indigo-500 rounded-full" />{" "}
+                      <MdKeyboardDoubleArrowLeft className="text-2xl m-1 rounded-full" />{" "}
                     </span>
                   </span>
                 </li>
@@ -246,7 +236,7 @@ function Employee() {
                 <li className="">
                   <span onClick={prePage}>
                     <span className="text-indigo-700 font-medium flex cursor-pointer hover:bg-indigo-200 rounded-full">
-                      <MdOutlineKeyboardArrowLeft className="text-2xl border border-indigo-500 rounded-full" />
+                      <MdOutlineKeyboardArrowLeft className="text-2xl m-1 rounded-full" />
                     </span>
                   </span>
                 </li>
@@ -255,8 +245,8 @@ function Employee() {
                 <li
                   className={`${
                     currentPage === n
-                      ? "text-white bg-indigo-600 rounded-full cursor-pointer"
-                      : "text-indigo-600 hover:bg-indigo-200 rounded-full"
+                      ? "text-white bg-indigo-600 rounded-full cursor-pointer p-1"
+                      : "text-indigo-600 hover:bg-indigo-200 rounded-full p-1"
                   }`}
                   key={i}
                 >
@@ -270,7 +260,7 @@ function Employee() {
                 <li>
                   <span onClick={nextPage}>
                     <span className="text-indigo-700 font-medium flex cursor-pointer hover:bg-indigo-200 rounded-full">
-                      <MdOutlineKeyboardArrowRight className="text-2xl border border-indigo-500 rounded-full" />{" "}
+                      <MdOutlineKeyboardArrowRight className="text-2xl m-1 rounded-full" />{" "}
                     </span>
                   </span>
                 </li>
@@ -280,7 +270,7 @@ function Employee() {
                 <li>
                   <span onClick={() => gotoPage(npage)}>
                     <span className="text-indigo-700 font-medium flex cursor-pointer hover:bg-indigo-200 rounded-full">
-                      <MdKeyboardDoubleArrowRight className="text-2xl border border-indigo-500 rounded-full" />{" "}
+                      <MdKeyboardDoubleArrowRight className="text-2xl rounded-full m-1" />{" "}
                     </span>
                   </span>
                 </li>

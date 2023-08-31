@@ -1,13 +1,9 @@
 "use client";
 import Link from "next/link";
 
-import React, { useState } from "react";
-import { BsDatabaseAdd } from "react-icons/bs";
-import { FcEditImage, FcSearch } from "react-icons/fc";
-import { DataTable } from "primereact/datatable";
-import { Column } from "primereact/column";
+import React from "react";
+import { BsDatabaseAdd, BsPencilSquare } from "react-icons/bs";
 import DeleteBrand from "@/components/brand/DeleteBrand";
-
 
 const getBrands = async () => {
   try {
@@ -26,76 +22,74 @@ const getBrands = async () => {
 };
 
 async function Brand() {
-  const [globalFilter, setGlobalFilter] = useState();
   const { brands } = await getBrands();
-  const indexColumnTemplate = (rowData, column) => {
-    return column.rowIndex + 1;
-  };
-
-  const actionBodyTemplate = (rowData) => {
-    return (
-      <React.Fragment>
-        <div className="flex gap-4">
-          <Link href={`/settings/brand/update/${rowData._id}`}>
-            <FcEditImage className="text-3xl" />
-          </Link>
-
-          <DeleteBrand id={rowData._id} />
-        </div>
-      </React.Fragment>
-    );
-  };
-
-  const header = (
-    <div className="flex flex-wrap gap-2 items-center justify-end">
-      <span className="flex items-center">
-        <FcSearch />
-        <input
-          type="search"
-          onInput={(e) => setGlobalFilter(e.target.value)}
-          placeholder="Search......"
-          className="block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-        ></input>
-      </span>
-    </div>
-  );
+  const branchsCount = brands.length;
 
   return (
     <div className="grid place-items-center bg-white">
       <div className="text-center">
         <p className="text-3xl font-bold text-indigo-600">Brand Management</p>
-        <Link href={"/settings/brand/add"}>
-          <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 my-5">
-            <span className="flex items-center gap-2">
-              Add Brand
-              <BsDatabaseAdd />
-            </span>
-          </button>
-        </Link>
-
-        <div className="flex items-center justify-center max-w-4xl mx-auto">
-          <DataTable
-            value={brands}
-            showGridlines
-            stripedRows
-            header={header}
-            globalFilter={globalFilter}
-            paginator
-            rows={10}
-            style={{
-              fontSize: "15px",
-              backgroundColor: "var(--primary-color)",
-            }}
-            rowsPerPageOptions={[10, 25, 50]}
-            tableStyle={{ minWidth: "50rem", height: "50px" }}
-            
-          >
-            <Column header="No." body={indexColumnTemplate}></Column>
-            <Column field="brand_id" header="Brand ID" sortable></Column>
-            <Column field="name" header="Name" sortable></Column>
-            <Column body={actionBodyTemplate} header="Action"></Column>
-          </DataTable>
+        <div className="my-3">
+          <Link href={"/settings/brand/add"}>
+            <button className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:px-4 sm:py-2 md:text-base md:px-4 md:py-2 lg:text-lg lg:px-4.5 lg:py-2.5">
+              <span className="flex items-center gap-2">
+                Add Brand
+                <BsDatabaseAdd />
+              </span>
+            </button>
+          </Link>
         </div>
+      </div>
+      <div className="text-xs md:text-sm lg:text-base text-indigo-600">
+        Showing {branchsCount} results.
+      </div>
+      <div className="overflow-scroll h-[300px] rounded-lg border border-gray-200 shadow-md mt-2">
+        <table className="table-auto w-[700px] border-collapse bg-white text-left text-sm text-gray-500 ">
+          <thead className="bg-indigo-50">
+            <tr className="">
+              <th
+                scope="col"
+                className="px-6 py-2 font-semibold text-gray-900 lg:text-base sm:text-sm"
+              >
+                No
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-4 font-semibold text-gray-900 lg:text-base sm:text-sm"
+              >
+                Branch Name
+              </th>
+              <th
+                scope="col"
+                className="px-6 py-4 font-semibold text-gray-900 lg:text-base sm:text-sm"
+              >
+                Action
+              </th>
+            </tr>
+          </thead>
+          <tbody className="divide-y divide-gray-100 border-t border-gray-100 overflow-x-auto">
+            {brands &&
+              brands.map((item, index) => (
+                <tr key={item._id} className="hover:bg-indigo-100">
+                  <td className="px-6 py-2.5 text-gray-700">{index + 1}</td>
+                  <td className="px-6 py-2.5 text-gray-700">{item.name}</td>
+
+                  <td>
+                    <div className="flex gap-2">
+                      <Link href={`/settings/brand/update/${item._id}`}>
+                        <button className="gap-2 inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-sm font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
+                          Update <BsPencilSquare className="text-lg" />
+                        </button>
+                      </Link>
+                      <div className="">
+                        <DeleteBrand id={item._id} />
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              ))}
+          </tbody>
+        </table>
       </div>
     </div>
   );

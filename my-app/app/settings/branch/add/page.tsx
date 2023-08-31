@@ -39,8 +39,17 @@ function AddBrand() {
         <h1 className="text-2xl font-bold text-indigo-500">Form Add Branch</h1>
       </div>
 
-      <form onSubmit={handlerSubmit}>
-        <div className="mt-4">
+      <form
+        onSubmit={handlerSubmit}
+        className="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-1"
+      >
+        <div className="">
+          <label
+            htmlFor="Branch"
+            className="block text-sm font-medium leading-6 text-gray-900 mb-2"
+          >
+            Name Branch :
+          </label>
           <input
             type="text"
             value={name}
@@ -51,7 +60,7 @@ function AddBrand() {
         </div>
         <div className="mt-6 flex items-center justify-end gap-x-6">
           <Link href="/settings/branch">
-            <span className="text-sm font-semibold leading-6 text-gray-900">
+            <span className="rounded-md bg-red-600 px-3 py-2 text-sm text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
               Cancel
             </span>
           </Link>
