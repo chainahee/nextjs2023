@@ -28,7 +28,7 @@ async function Brand() {
   return (
     <div className="grid place-items-center bg-white">
       <div className="text-center">
-        <p className="text-3xl font-bold text-indigo-600">Brand Management</p>
+        <p className="text-3xl font-medium text-indigo-600">Brand Management</p>
         <div className="my-3">
           <Link href={"/settings/brand/add"}>
             <button className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:px-4 sm:py-2 md:text-base md:px-4 md:py-2 lg:text-lg lg:px-4.5 lg:py-2.5">

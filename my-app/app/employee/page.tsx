@@ -59,7 +59,7 @@ function Employee() {
   return (
     <div className="grid place-items-center bg-white">
       <div className="text-center">
-        <p className="sm:text-2xl font-bold text-indigo-600 text-xl">
+        <p className="sm:text-2xl font-medium text-indigo-600 text-xl">
           Employee Management
         </p>
         <div className="my-3">

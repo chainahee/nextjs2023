@@ -2,7 +2,7 @@
 import DeleteStatusEmployee from "@/components/statusemployee/DeleteStatusEmployee";
 import Link from "next/link";
 import React from "react";
-import { BsDatabaseAdd } from "react-icons/bs";
+import { BsDatabaseAdd, BsPencilSquare } from "react-icons/bs";
 
 const getStatus = async () => {
   try {
@@ -22,11 +22,12 @@ const getStatus = async () => {
 
 async function StatusEmployee() {
   const { statusEmployee } = await getStatus();
+  const statusEmployeeCount = statusEmployee.length;
 
   return (
     <div className="grid place-items-center bg-white">
       <div className="text-center">
-        <h1 className="text-3xl font-bold text-indigo-600">
+        <h1 className="text-3xl font-medium text-indigo-600">
           Status Employee Management
         </h1>
         <Link href={"/settings/statusemployee/add"}>
@@ -38,8 +39,11 @@ async function StatusEmployee() {
           </button>
         </Link>
       </div>
-      <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md mt-2 mx-5">
-        <table className="table-auto md:table-fixed w-full border-collapse bg-white text-left text-sm text-gray-500">
+      <div className="text-xs md:text-sm lg:text-base text-indigo-600">
+        Showing {statusEmployeeCount} results.
+      </div>
+      <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md mt-2">
+        <table className="table-auto w-[700px] md:table-fixed border-collapse bg-white text-left text-sm text-gray-500">
           <thead className="bg-gray-50">
             <tr className="px-3">
               <th scope="col" className="px-6 py-2 font-medium text-gray-900">
@@ -64,11 +68,11 @@ async function StatusEmployee() {
                       <Link
                         href={`/settings/statusemployee/update/${items._id}`}
                       >
-                        <button className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
-                          Edit
+                        <button className="gap-2 inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-sm font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
+                          Update <BsPencilSquare className="text-lg" />
                         </button>
                       </Link>
-                      <div className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
+                      <div className="">
                         <DeleteStatusEmployee id={items._id} />
                       </div>
                     </div>

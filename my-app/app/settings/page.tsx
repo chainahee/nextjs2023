@@ -22,14 +22,14 @@ function Settings() {
       label: "Status Device",
     },
     {
-      href: "/settings/department",
-      icon: <BsBriefcase />,
-      label: "Department",
-    },
-    {
       href: "/settings/branch",
       icon: <BsBuildings />,
       label: "Branch",
+    },
+    {
+      href: "/settings/department",
+      icon: <BsBriefcase />,
+      label: "Department",
     },
     {
       href: "/settings/statusemployee",
@@ -40,23 +40,23 @@ function Settings() {
 
   return (
     <div>
-      <div className="flex items-center justify-center">
-        <h1 className="md:text-2xl text-xl lg:text-3xl mb-16 text-purple-600 font-bold">
+      <div className="flex items-center justify-center mb-3">
+        <p className="sm:text-2xl font-medium text-indigo-600 text-xl">
           Setting Menu
-        </h1>
+        </p>
       </div>
-      <div className="gap-7 grid md:grid-cols-2 lg:grid-cols-4 items-center">
+      <div className="gap-3 grid md:grid-cols-2 lg:grid-cols-3 items-center mt-3">
         {menuItems.map((menuItem, index) => (
           <Link
             href={menuItem.href}
             key={index}
-            className="border-2 rounded-md p-3"
+            className="border rounded-md p-2.5 hover:bg-indigo-100 border-indigo-500"
           >
-            <div className="lg:flex lg:gap-3 grid lg:items-center justify-center">
-              <span className="lg:text-6xl text-purple-500 text-4xl items-center flex justify-center lg:py-4">
+            <div className="flex justify-start p-1.5 gap-x-3">
+              <span className="lg:text-3xl text-indigo-500 text-xl font-medium flex items-center">
                 {menuItem.icon}
               </span>
-              <span className="lg:text-2xl md:text-xl text-base font-bold text-purple-800 pt-4">
+              <span className="lg:text-xl md:text-lg text-base font-medium text-indigo-800">
                 {menuItem.label}
               </span>
             </div>

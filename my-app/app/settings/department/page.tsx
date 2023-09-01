@@ -28,7 +28,7 @@ async function Department() {
   return (
     <div className="grid place-items-center bg-white">
       <div className="text-center">
-        <p className="text-3xl font-bold text-indigo-600">
+        <p className="text-3xl font-medium text-indigo-600">
           Department Management
         </p>
         <div className="my-3">

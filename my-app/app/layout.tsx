@@ -1,11 +1,13 @@
 import Navbar from "@/components/navbar/Navbar";
 import "./globals.css";
 import { Inter } from "next/font/google";
-import Footer from "@/components/footer/page";
 import "primereact/resources/themes/lara-light-indigo/theme.css";
 
 //core
 import "primereact/resources/primereact.min.css";
+
+import Footer from "@/components/footer/page";
+import Breadcrumbs from "@/components/breadcrumbs/Breadcrumbs";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -20,11 +22,15 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={inter.className}>
+      <body className={`inter.className font-display`}>
         <div className="max-h-screen flex flex-row justify-start">
           <Navbar />
-          <div className="flex-1 p-4 bg-indigo-50">
-            <div className="bg-white py-6 px-3 sm:px-6 lg:px-8 rounded-lg h-full">{children}</div>
+          <div className="p-4 bg-indigo-50 flex-col flex-1 overflow-scroll">
+            <Breadcrumbs />
+            <div className="bg-white py-6 px-3 sm:px-6 lg:px-8 rounded-lg mt-3 shadow-md h-full">
+              {children}
+            </div>
+            <Footer />
           </div>
         </div>
       </body>
