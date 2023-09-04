@@ -46,8 +46,8 @@ async function Brand() {
       <div className="text-xs md:text-sm lg:text-base text-indigo-600">
         Showing {categoryCount} results.
       </div>
-      <div className="overflow-scroll h-[300px] rounded-lg border border-gray-200 shadow-md mt-2">
-        <table className="table-auto w-[700px] border-collapse bg-white text-left text-sm text-gray-500 ">
+      <div className="overflow-scroll w-full h-[300px] rounded-lg border border-gray-200 shadow-md mt-2">
+        <table className="w-full border-collapse bg-white text-left text-sm text-gray-500 ">
           <thead className="bg-indigo-50">
             <tr className="">
               <th

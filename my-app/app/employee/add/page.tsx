@@ -14,6 +14,15 @@ function AddEmployee() {
   const [status, setStatus] = useState("");
   const router = useRouter();
 
+  const uniqueData = new Set();
+
+  // ตรวจสอบความซ้ำ
+  if (uniqueData.has("ข้อมูลที่ไม่ซ้ำกัน")) {
+    console.log("ข้อมูลนี้มีอยู่แล้ว");
+  } else {
+    console.log("เพิ่มข้อมูลนี้ได้");
+  }
+
   useEffect(() => {
     const fetchDepartments = async () => {
       try {
@@ -74,6 +83,15 @@ function AddEmployee() {
       alert("โปรดกรอกข้อมูลให้ครบ");
       return;
     }
+
+    // ตรวจสอบความซ้ำกันในรายการที่ต้องการเพิ่ม
+    const isDuplicate = uniqueData.has(employeeid); // เช็คจาก Set ที่เก็บไว้
+
+    if (isDuplicate) {
+      alert("ข้อมูลนี้มีอยู่แล้ว");
+      return;
+    }
+
     try {
       const res = await fetch("http://localhost:3000/api/employee", {
         method: "POST",
@@ -92,7 +110,11 @@ function AddEmployee() {
       console.log(res);
 
       if (res.ok) {
+        // หากสำเร็จในการสร้างพนักงาน
         router.push("/employee");
+
+        // เพิ่มข้อมูลเข้า Set เพื่อตรวจสอบในครั้งถัดไป
+        uniqueData.add(employeeid);
       } else {
         throw new Error("Failed to create a employee");
       }
@@ -101,7 +123,7 @@ function AddEmployee() {
     }
   };
 
-  console.log(fullname);
+  // console.log(fullname);
 
   return (
     <div>

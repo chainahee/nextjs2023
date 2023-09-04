@@ -114,13 +114,13 @@ function UpdateFromDevice({
 
   return (
     <div>
-      <div className="flex items-center justify-center my-5">
+      <div className="flex items-center justify-center my-2">
         <h1 className="text-2xl font-bold text-indigo-500">
           Form Update Device
         </h1>
       </div>
       <form onSubmit={handlerSubmit}>
-        <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+        <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
           <div className="sm:col-span-3">
             <label
               htmlFor="serial"
@@ -177,7 +177,7 @@ function UpdateFromDevice({
               >
                 <option value="">Select a brand</option>
                 {brands.map((brand) => (
-                  <option key={brand._id} value={brand._id}>
+                  <option key={brand._id} value={brand.name}>
                     {brand.name}
                   </option>
                 ))}
@@ -203,7 +203,7 @@ function UpdateFromDevice({
               >
                 <option value="">Select a category</option>
                 {categorys.map((category) => (
-                  <option key={category._id} value={category._id}>
+                  <option key={category._id} value={category.name}>
                     {category.name}
                   </option>
                 ))}
@@ -229,7 +229,7 @@ function UpdateFromDevice({
               >
                 <option value="">Select a status</option>
                 {statusdevices.map((status) => (
-                  <option key={status._id} value={status._id}>
+                  <option key={status._id} value={status.name}>
                     {status.name}
                   </option>
                 ))}

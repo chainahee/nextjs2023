@@ -2,33 +2,36 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import axios from "axios";
+
 
 function addDevice() {
   const [name, setName] = useState("");
   const [serial, setSerial] = useState("");
   const [disc, setDisc] = useState("");
-
-  const [category, setCategory] = useState("");
-  const [status, setStatus] = useState("");
   const [price, setPrice] = useState("");
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
 
-  const router = useRouter();
-  const [brands, setBrands] = useState([]);
+  const [category, setCategory] = useState("");
   const [categorys, setCategorys] = useState([]);
+  const [status, setStatus] = useState("");
   const [statusdevices, setStatusDevices] = useState([]);
-  const [selectedBrand, setSelectedBrand] = useState("");
+  const [brands, setBrands] = useState([]);
+  const [brand, setBrand] = useState("");
+
+  const router = useRouter();
 
   useEffect(() => {
     const fetchBrands = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/brand");
-        const data = response.data;
+        const response = await fetch("http://localhost:3000/api/brand");
+        if (!response.ok) {
+          throw new Error("Failed to fetch brand");
+        }
+        const data = await response.json();
         setBrands(data.brands);
       } catch (error) {
-        console.log("Error loading brands", error);
+        console.log("Error loading brand", error);
       }
     };
 
@@ -38,8 +41,11 @@ function addDevice() {
   useEffect(() => {
     const fetchCategorys = async () => {
       try {
-        const response = await axios.get("http://localhost:3000/api/category");
-        const data = response.data;
+        const response = await fetch("http://localhost:3000/api/category");
+        if (!response.ok) {
+          throw new Error("Failed to fetch categorys");
+        }
+        const data = await response.json();
         setCategorys(data.categorys);
       } catch (error) {
         console.log("Error loading categorys", error);
@@ -50,38 +56,26 @@ function addDevice() {
   }, []);
 
   useEffect(() => {
-    const fetchStatusDevice = async () => {
+    const fetchStatuss = async () => {
       try {
-        const response = await axios.get(
-          "http://localhost:3000/api/statusdevice"
-        );
-        const data = response.data;
+        const response = await fetch("http://localhost:3000/api/statusdevice");
+        if (!response.ok) {
+          throw new Error("Failed to fetch statusdevices");
+        }
+        const data = await response.json();
         setStatusDevices(data.statusdevices);
       } catch (error) {
         console.log("Error loading statusdevices", error);
       }
     };
 
-    fetchStatusDevice();
+    fetchStatuss();
   }, []);
 
   const handlerSubmit = async (e) => {
     e.preventDefault();
 
-    const brandResponse = await fetch(
-      `http://localhost:3000/api/brand/${selectedBrand}`
-    );
-    const brandData = await brandResponse.json();
-
-    if (
-      !name ||
-      !serial ||
-      !selectedBrand ||
-      !category ||
-      !status ||
-      !price ||
-      !disc
-    ) {
+    if (!name || !serial || !category || !brand || !status) {
       alert("โปรดกรอกข้อมูลให้ครบ");
       return;
     }
@@ -94,13 +88,13 @@ function addDevice() {
         body: JSON.stringify({
           name,
           serial,
-          brand: selectedBrand,
           category,
+          brand,
+          status,
           price,
           startDate,
-          status,
           endDate,
-          disc,
+          disc
         }),
       });
 
@@ -116,15 +110,15 @@ function addDevice() {
     }
   };
 
-  console.log(selectedBrand);
+  console.log(brand);
 
   return (
     <div>
-      <div className="flex items-center justify-center my-5">
+      <div className="flex items-center justify-center">
         <h1 className="text-2xl font-bold text-indigo-500">Form Add Device</h1>
       </div>
       <form onSubmit={handlerSubmit}>
-        <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+        <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
           <div className="sm:col-span-3">
             <label
               htmlFor="serial"
@@ -147,7 +141,7 @@ function addDevice() {
               htmlFor="name"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
-              Name :
+              Name Device :
             </label>
             <input
               type="text"
@@ -156,7 +150,7 @@ function addDevice() {
               id="name"
               autoComplete="given-name"
               onChange={(e) => setName(e.target.value)}
-              placeholder="Name"
+              placeholder="Name Device"
               className="mt-2 block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
             />
           </div>
@@ -174,15 +168,15 @@ function addDevice() {
               <select
                 id="brand"
                 name="brand"
-                value={selectedBrand}
+                value={brand}
                 autoComplete="status"
-                onChange={(e) => setSelectedBrand(e.target.value)}
+                onChange={(e) => setBrand(e.target.value)}
                 className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               >
                 <option value="">Select a brand</option>
-                {brands.map((items) => (
-                  <option key={items._id} value={items._id}>
-                    {items.name}
+                {brands.map((brand) => (
+                  <option key={brand._id} value={brand.name}>
+                    {brand.name}
                   </option>
                 ))}
               </select>

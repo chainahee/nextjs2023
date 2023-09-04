@@ -90,54 +90,33 @@ function Employee() {
       </div>
 
       <div className="overflow-scroll h-[350px] w-full rounded-lg border border-gray-200 shadow-md mt-2">
-        <table className="w-full border-collapse bg-white text-left text-xs md:text-sm text-gray-500 ">
+        <table className="table-auto w-full border-collapse bg-white text-xs md:text-sm text-gray-500">
           <thead className="bg-indigo-50">
             <tr className="">
-              <th
-                scope="col-3"
-                className="px-6 py-2 text-gray-900 lg:text-base sm:text-sm"
-              >
+              <th className="px-6 py-2 text-gray-900">
                 No
               </th>
-              <th
-                scope="col-2"
-                className="px-6 py-4 text-gray-900 lg:text-base sm:text-sm"
-              >
+              <th className="px-6 py-4 text-gray-900">
                 Employee ID
               </th>
-              <th
-                scope="col"
-                className="px-6 py-4 text-gray-900 lg:text-base sm:text-sm"
-              >
+              <th className="px-6 py-4 text-gray-900">
                 Full Name
               </th>
-              <th
-                scope="col"
-                className="px-6 py-4 text-gray-900 lg:text-base sm:text-sm"
-              >
+              <th className="px-6 py-4 text-gray-900">
                 Department
               </th>
-              <th
-                scope="col"
-                className="px-6 py-4 text-gray-900 lg:text-base sm:text-sm"
-              >
+              <th className="px-6 py-4 text-gray-900">
                 Branch
               </th>
-              <th
-                scope="col"
-                className="px-6 py-4 text-gray-900 lg:text-base sm:text-sm"
-              >
+              <th className="px-6 py-4 text-gray-900">
                 Status
               </th>
-              <th
-                scope="col"
-                className="px-6 py-4 text-gray-900 lg:text-base sm:text-sm"
-              >
+              <th className="px-6 py-4 text-gray-900">
                 Action
               </th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100 border-t border-gray-100 overflow-x-auto">
+          <tbody className="divide-y divide-gray-100 border-t border-gray-100">
             {records &&
               records
                 .sort((a, b) => a.employeeid.localeCompare(b.employeeid))

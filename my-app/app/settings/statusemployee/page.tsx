@@ -42,8 +42,8 @@ async function StatusEmployee() {
       <div className="text-xs md:text-sm lg:text-base text-indigo-600">
         Showing {statusEmployeeCount} results.
       </div>
-      <div className="overflow-hidden rounded-lg border border-gray-200 shadow-md mt-2">
-        <table className="table-auto w-[700px] md:table-fixed border-collapse bg-white text-left text-sm text-gray-500">
+      <div className="w-full rounded-lg border border-gray-200 shadow-md mt-2">
+        <table className="w-full md:table-fixed border-collapse bg-white text-left text-sm text-gray-500">
           <thead className="bg-gray-50">
             <tr className="px-3">
               <th scope="col" className="px-6 py-2 font-medium text-gray-900">
