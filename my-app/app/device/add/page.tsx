@@ -21,6 +21,13 @@ function addDevice() {
 
   const router = useRouter();
 
+  const isSerialUnique = async (serial) => {
+    // ตรวจสอบว่า serial ไม่ซ้ำกันในฐานข้อมูล
+    const existingDevice = await DeviceModel.findOne({ serial });
+  
+    return !existingDevice; // คืนค่า true ถ้า serial ไม่ซ้ำกัน
+  };
+
   useEffect(() => {
     const fetchBrands = async () => {
       try {
@@ -110,7 +117,7 @@ function addDevice() {
     }
   };
 
-  console.log(brand);
+  // console.log(brand);
 
   return (
     <div>

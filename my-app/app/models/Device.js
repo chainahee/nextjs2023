@@ -3,7 +3,7 @@ import mongoose, { Schema } from "mongoose";
 const deviceSchema = new Schema(
   {
     name: { type: String },
-    serial: { type: String },
+    serial: { type: String, unique: true, require: true },
     disc: { type: String },
     brand: { type: String },
     category: { type: String},

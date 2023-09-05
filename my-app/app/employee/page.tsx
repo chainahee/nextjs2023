@@ -56,6 +56,9 @@ function Employee() {
     fetchEmployee();
   }, []);
 
+console.log(records);
+
+  
   return (
     <div className="grid place-items-center bg-white">
       <div className="text-center">
