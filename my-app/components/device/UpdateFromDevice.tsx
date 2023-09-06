@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { setEmitFlags } from "typescript";
 
 function UpdateFromDevice({
   name,
@@ -30,9 +31,7 @@ function UpdateFromDevice({
   const [categorys, setCategorys] = useState([]);
   const [statusdevices, setStatusDevices] = useState([]);
 
-  const dateFromMongoDB = new Date("2023-08-09T00:00:00.000Z"); // ตัวอย่างวันที่จาก MongoDB
-  const formattedDate = dateFromMongoDB.toLocaleDateString("en-GB"); // แปลงเป็นรูปแบบ "DD/MM/YYYY"
-  console.log(formattedDate);
+  const [error, setError] = useState(""); // เพิ่มสถานะข้อผิดพลาด
 
   useEffect(() => {
     const fetchBrands = async () => {
@@ -107,16 +106,24 @@ function UpdateFromDevice({
         }),
       });
 
-      if (!res.ok) {
-        throw new Error("Failed to update");
+      // เครียร์ข้อผิดพลาดเมื่อข้อมูลถูกต้อง
+      setError("");
+
+      if (res.ok) {
+        router.push("/device");
+      } else {
+        throw new Error("Failed to create a device");
       }
-      router.push("/device");
-    } catch (err) {
-      console.log(err);
+    } catch (error) {
+      setError("เกิดข้อผิดพลาดในการส่งข้อมูล: " + error.message);
     }
   };
 
-  // console.log(startDate);
+  // console.log(newStartDate, "newstartDate");
+  // console.log(startDate, "startDate");
+
+  const mongodbStartDate = new Date(newStartDate);
+  const mongodbEndDate = new Date(newEendDate);
 
   return (
     <div>
@@ -277,17 +284,15 @@ function UpdateFromDevice({
             <div className="mt-2">
               <input
                 type="date"
-                value={newStartDate}
                 name="start-date"
                 id="start-date"
-                placeholder="DD/MM/YYYY"
+                value={mongodbStartDate.toISOString().split("T")[0]}
                 onChange={(e) => {
-                  const dateFromMongoDB = e.target.value;
-                  const formattedDate =
-                    dateFromMongoDB.toLocaleDateString("en-GB");
+                  const selectedDate = e.target.value;
+                  const dateParts = selectedDate.split("-");
+                  const formattedDate = `${dateParts[0]}-${dateParts[1]}-${dateParts[2]}`;
                   setStartDate(formattedDate);
-                  console.log(formattedDate);
-                  
+                  // ตอนนี้ formattedDate มีรูปแบบ "yyyy-MM-dd" และสามารถนำมาใช้กับ MongoDB ได้
                 }}
                 className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -296,7 +301,7 @@ function UpdateFromDevice({
 
           <div className="sm:col-span-2">
             <label
-              htmlFor="start-date"
+              htmlFor="end-date"
               className="block text-sm font-medium leading-6 text-gray-900"
             >
               End Date Warrantry :
@@ -304,15 +309,15 @@ function UpdateFromDevice({
             <div className="mt-2">
               <input
                 type="date"
-                value={newEendDate}
                 name="end-date"
                 id="end-date"
+                value={mongodbEndDate.toISOString().split("T")[0]}
                 onChange={(e) => {
                   const selectedDate = e.target.value;
-                  const formattedDate = new Date(selectedDate)
-                    .toISOString()
-                    .split("T")[0];
+                  const dateParts = selectedDate.split("-");
+                  const formattedDate = `${dateParts[0]}-${dateParts[1]}-${dateParts[2]}`;
                   setEndDate(formattedDate);
+                  // ตอนนี้ formattedDate มีรูปแบบ "yyyy-MM-dd" และสามารถนำมาใช้กับ MongoDB ได้
                 }}
                 className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />

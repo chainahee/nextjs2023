@@ -3,7 +3,6 @@ import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 
-
 function addDevice() {
   const [name, setName] = useState("");
   const [serial, setSerial] = useState("");
@@ -19,14 +18,9 @@ function addDevice() {
   const [brands, setBrands] = useState([]);
   const [brand, setBrand] = useState("");
 
-  const router = useRouter();
+  const [error, setError] = useState(""); // เพิ่มสถานะข้อผิดพลาด
 
-  const isSerialUnique = async (serial) => {
-    // ตรวจสอบว่า serial ไม่ซ้ำกันในฐานข้อมูล
-    const existingDevice = await DeviceModel.findOne({ serial });
-  
-    return !existingDevice; // คืนค่า true ถ้า serial ไม่ซ้ำกัน
-  };
+  const router = useRouter();
 
   useEffect(() => {
     const fetchBrands = async () => {
@@ -86,7 +80,23 @@ function addDevice() {
       alert("โปรดกรอกข้อมูลให้ครบ");
       return;
     }
+
+     // เครียร์ข้อผิดพลาดเมื่อข้อมูลถูกต้อง
+     setError("");
+
+    // ตรวจสอบและกำหนดค่า startDate และ endDate ให้เป็น null หรือ '-'
+    const formattedStartDate = startDate || ""; // หรือ '-'
+    const formattedEndDate = endDate || ""; // หรือ '-'
+
     try {
+      // ตรวจสอบว่ามีข้อมูล serial ซ้ำหรือไม่
+      const isSerialExists = await checkIfSerialExists(serial);
+
+      if (isSerialExists) {
+        alert("Serial นี้มีอยู่ในระบบแล้ว");
+        return;
+      }
+
       const res = await fetch("http://localhost:3000/api/device", {
         method: "POST",
         headers: {
@@ -99,9 +109,9 @@ function addDevice() {
           brand,
           status,
           price,
-          startDate,
-          endDate,
-          disc
+          startDate: formattedStartDate,
+          endDate: formattedEndDate,
+          disc,
         }),
       });
 
@@ -114,6 +124,20 @@ function addDevice() {
       }
     } catch (err) {
       console.log(err);
+    }
+  };
+
+  // ฟังก์ชันตรวจสอบว่ามีข้อมูล serial ในระบบหรือไม่
+  const checkIfSerialExists = async (serial) => {
+    try {
+      const response = await fetch(
+        `http://localhost:3000/api/check-serial?serial=${serial}`
+      );
+      const data = await response.json();
+      return data.exists; // ถ้ามี serial ในระบบแล้วจะส่งค่า true กลับมา
+    } catch (error) {
+      console.log(error);
+      return false; // หากเกิดข้อผิดพลาดในการตรวจสอบให้ส่งค่า false
     }
   };
 
@@ -163,7 +187,7 @@ function addDevice() {
           </div>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+        <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
           <div className="sm:col-span-2">
             <label
               htmlFor="brand"
@@ -243,7 +267,7 @@ function addDevice() {
           </div>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+        <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
           <div className="sm:col-span-2">
             <label
               htmlFor="price"
@@ -260,6 +284,7 @@ function addDevice() {
                 name="price"
                 id="price"
                 value={price}
+                autoComplete="0"
                 onChange={(e) => setPrice(e.target.value)}
                 className="block w-full rounded-md border-0 py-1.5 pl-7 pr-20 text-gray-900 ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 placeholder="0.00"
@@ -275,11 +300,11 @@ function addDevice() {
             </label>
             <div className="mt-2">
               <input
-                type="text"
+                type="date"
                 value={startDate}
                 name="start-date"
                 id="start-date"
-                placeholder="DD/MM/YYYY"
+                autoComplete="off"
                 onChange={(e) => setStartDate(e.target.value)}
                 className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
@@ -306,7 +331,7 @@ function addDevice() {
           </div>
         </div>
 
-        <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+        <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
           <div className="col-span-full">
             <label
               htmlFor="discription"
@@ -319,7 +344,7 @@ function addDevice() {
                 name="discription"
                 id="discription"
                 value={disc}
-                rows={3}
+                rows={5}
                 onChange={(e) => setDisc(e.target.value)}
                 className="mt-2 block w-full rounded-md border-0 px-3.5 py-2 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
               />
