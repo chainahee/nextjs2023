@@ -57,7 +57,7 @@ function Device() {
     fetchDevices();
   }, []);
 
-  console.log(records);
+  // console.log(records);
 
   return (
     <div className="grid place-items-center bg-white">
@@ -104,9 +104,7 @@ function Device() {
                 Name Device
               </th>
               <th className="px-3 py-3 text-gray-900 font-medium">Brand</th>
-              <th className="px-3 py-3 text-gray-900 font-medium">
-                Category
-              </th>
+              <th className="px-3 py-3 text-gray-900 font-medium">Category</th>
               <th className="px-3 py-3 text-gray-900 font-medium">
                 End Date Warrantry
               </th>
@@ -139,7 +137,7 @@ function Device() {
                       {new Date(item.endDate) > new Date() ? "Active" : ""}
                     </td>
                     <td className="px-6 py-3 text-gray-700">{item.status}</td>
-                    <td>
+                    <td className="px-6 py-1.5">
                       <div className="flex justify-center gap-2">
                         <Link href={`/device/update/${item._id}`}>
                           <button className="gap-2 inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-sm font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">

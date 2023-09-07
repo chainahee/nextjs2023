@@ -12,12 +12,12 @@ const getBranchs = async () => {
     });
 
     if (!res.ok) {
-      throw new Error("failed to fetch brands");
+      throw new Error("failed to fetch branch");
     }
 
     return res.json();
   } catch (error) {
-    console.log("Error loading brand", error);
+    console.log("Error loading branch", error);
   }
 };
 

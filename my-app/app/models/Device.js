@@ -7,8 +7,8 @@ const deviceSchema = new Schema(
     disc: { type: String },
     brand: { type: String },
     category: { type: String},
-    startDate: { type: Date, default: null }, // ให้ startDate มีค่าเริ่มต้นเป็น null
-    endDate: { type: Date, default: null },
+    startDate: { type: Date }, // ให้ startDate มีค่าเริ่มต้นเป็น null
+    endDate: { type: Date },
     status: { type: String },
     price: { type: Number, default: "0" },
   },

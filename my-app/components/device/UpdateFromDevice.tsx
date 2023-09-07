@@ -2,7 +2,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { setEmitFlags } from "typescript";
 
 function UpdateFromDevice({
   name,
@@ -30,8 +29,6 @@ function UpdateFromDevice({
   const [brands, setBrands] = useState([]);
   const [categorys, setCategorys] = useState([]);
   const [statusdevices, setStatusDevices] = useState([]);
-
-  const [error, setError] = useState(""); // เพิ่มสถานะข้อผิดพลาด
 
   useEffect(() => {
     const fetchBrands = async () => {
@@ -107,7 +104,6 @@ function UpdateFromDevice({
       });
 
       // เครียร์ข้อผิดพลาดเมื่อข้อมูลถูกต้อง
-      setError("");
 
       if (res.ok) {
         router.push("/device");
@@ -115,7 +111,7 @@ function UpdateFromDevice({
         throw new Error("Failed to create a device");
       }
     } catch (error) {
-      setError("เกิดข้อผิดพลาดในการส่งข้อมูล: " + error.message);
+      error;
     }
   };
 
@@ -291,6 +287,12 @@ function UpdateFromDevice({
                   const selectedDate = e.target.value;
                   const dateParts = selectedDate.split("-");
                   const formattedDate = `${dateParts[0]}-${dateParts[1]}-${dateParts[2]}`;
+                  if (/^\d{4}-\d{2}-\d{2}$/.test(formattedDate)) {
+                    setStartDate(formattedDate);
+                  } else {
+                    // ถ้าไม่ถูกต้อง ให้กำหนดค่าเป็นว่าง
+                    setStartDate("");
+                  }
                   setStartDate(formattedDate);
                   // ตอนนี้ formattedDate มีรูปแบบ "yyyy-MM-dd" และสามารถนำมาใช้กับ MongoDB ได้
                 }}
