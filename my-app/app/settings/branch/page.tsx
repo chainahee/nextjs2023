@@ -28,7 +28,9 @@ async function Brand() {
   return (
     <div className="grid place-items-center bg-white">
       <div className="text-center">
-        <p className="text-3xl font-medium text-indigo-600">Branch Management</p>
+        <p className="text-3xl font-medium text-indigo-600">
+          Branch Management
+        </p>
         <div className="my-3">
           <Link href={"/settings/branch/add"}>
             <button className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:px-4 sm:py-2 md:text-base md:px-4 md:py-2 lg:text-lg lg:px-4.5 lg:py-2.5">
@@ -42,7 +44,8 @@ async function Brand() {
         </div>
       </div>
       <div className="text-xs md:text-sm lg:text-base text-indigo-600">
-        Showing {branchsCount} results.
+        Showing {branchsCount}
+        results.
       </div>
       <div className="overflow-scroll w-full rounded-lg border border-gray-200 shadow-md mt-2">
         <table className="w-full border-collapse bg-white text-left text-sm text-gray-500 ">
@@ -79,7 +82,8 @@ async function Brand() {
                     <div className="flex gap-2">
                       <Link href={`/settings/branch/update/${item._id}`}>
                         <button className="gap-2 inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-sm font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
-                          Update <BsPencilSquare className="text-lg" />
+                          Update
+                          <BsPencilSquare className="text-lg" />
                         </button>
                       </Link>
                       <div className="">
@@ -88,7 +92,7 @@ async function Brand() {
                     </div>
                   </td>
                 </tr>
-              ))}
+              ))}{" "}
           </tbody>
         </table>
       </div>

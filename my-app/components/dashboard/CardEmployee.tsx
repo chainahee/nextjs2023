@@ -28,14 +28,14 @@ async function CardEmployee() {
   }/${currentDate.getFullYear()}`;
 
   // คำนวณจำนวนข้อมูลที่ได้
-  //   const employeeCount = employees.length;
+  // const employeeCount = employees.length;
 
-  //   console.log(employees);
-  //   console.log(employeeCount);
+  // console.log(employees);
+  // console.log(employeeCount);
 
   return (
     <div className="container p-5 border-r">
-      <header className="sm:flex-col gap-y-2 md:flex-col lg:justify-between">
+      <header className="sm:flex-col gap-y-2 md:flex-col justify-between sm:text-indigo-500">
         <span className="font-medium sm:text-2xl text-gray-800 text-base">
           Employees List.
         </span>
