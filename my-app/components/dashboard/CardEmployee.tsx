@@ -34,17 +34,17 @@ async function CardEmployee() {
   // console.log(employeeCount);
 
   return (
-    <div className="container p-5 border-r">
-      <header className="sm:flex-col gap-y-2 md:flex-col justify-between sm:text-indigo-500">
-        <span className="font-medium sm:text-2xl text-gray-800 text-base">
+    <div className="container p-5 lg:border-r">
+      <header className="md:flex justify-between items-center sm:flex-none sm:gap-y-2">
+        <h1 className="font-medium sm:text-2xl text-gray-800 text-base">
           Employees List.
-        </span>
-        <span className="text-gray-500 lg:text-sm text-xs">
+        </h1>
+        <h1 className="text-gray-500 lg:text-sm text-xs">
           As of {formattedCurrentDate}.
-        </span>
+        </h1>
       </header>
       <div className="mt-5">
-        <span className="font-medium text-gray-800 text-lg text-center">
+        <span className="sm:text-sm font-medium text-gray-800 md:text-lg text-center">
           <span className="text-4xl text-indigo-500 font-semibold">
             {" "}
             {employeeCount}{" "}
@@ -53,18 +53,15 @@ async function CardEmployee() {
         </span>
       </div>
 
-      <Link
-        href={"/employee"}
-        className="mt-3 flex justify-between hover:bg-indigo-100"
-      >
-        <div className="flex items-center justify-end gap-2">
-          {" "}
-          <span className="lg:text-sm text-xs text-indigo-400">
+      <div className="flex items-center justify-end mt-3">
+        {" "}
+        <Link href={"/employee"} className="flex items-center gap-2">
+          <span className="lg:text-sm text-xs text-indigo-400 hover:text-indigo-600 hover:font-medium">
             See Detail
           </span>{" "}
-          <BsArrowRightSquare className="text-xl text-indigo-500" />
-        </div>
-      </Link>
+          <BsArrowRightSquare className="text-xl text-indigo-500 hover:bg-indigo-100" />
+        </Link>
+      </div>
     </div>
   );
 }

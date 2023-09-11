@@ -35,26 +35,33 @@ async function CardDevice() {
 
   return (
     <div className="container p-5">
-      <header>
-        <span className="font-medium sm:text-2xl text-gray-800 text-base">
-          Devices List.
-        </span>
+      <header className="md:flex justify-between items-center sm:flex-none sm:gap-y-2">
+        <h1 className="font-medium sm:text-2xl text-gray-800 text-base">
+          Device List.
+        </h1>
+        <h1 className="text-gray-500 lg:text-sm text-xs">
+          As of {formattedCurrentDate}.
+        </h1>
       </header>
       <div className="mt-5">
         <span className="font-medium text-gray-800 text-lg">
-          <span className="text-4xl text-indigo-500 font-semibold"> {employeeCount} </span>{" "}
+          <span className="text-4xl text-indigo-500 font-semibold">
+            {" "}
+            {employeeCount}{" "}
+          </span>{" "}
           Results.
         </span>
       </div>
 
-      <Link href={"/device"} className="mt-3 flex justify-between">
-        <span className="text-gray-500 text-sm">As of {formattedCurrentDate}.</span>
-        <div className="flex items-center justify-center gap-2">
-          {" "}
-          <span className="tex-lg">See Detail</span>{" "}
-          <BsArrowRightSquare className="text-xl text-indigo-500" />
-        </div>
-      </Link>
+      <div className="flex items-center justify-end mt-3">
+        {" "}
+        <Link href={"/device"} className="flex items-center gap-2">
+          <span className="lg:text-sm text-xs text-indigo-400 hover:text-indigo-600 hover:font-medium">
+            See Detail
+          </span>{" "}
+          <BsArrowRightSquare className="text-xl text-indigo-500 hover:bg-indigo-100" />
+        </Link>
+      </div>
     </div>
   );
 }

@@ -1,8 +1,6 @@
 "use client";
 import React, { useState, useEffect } from "react";
-import Link from "next/link";
-import DeleteEmployee from "@/components/employee/DeleteEmployee";
-import { BsPencilSquare, BsSearch } from "react-icons/bs";
+import { BsSearch } from "react-icons/bs";
 
 function InformationEmployee() {
   const [employees, setEmployees] = useState([]);
@@ -44,7 +42,7 @@ function InformationEmployee() {
     setSearchResults(filteredEmployees);
   };
 
-  console.log(searchTerm);
+  console.log(employees);
 
   return (
     <div className="">
@@ -121,7 +119,6 @@ function InformationEmployee() {
               >
                 Status
               </th>
-             
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100 border-t border-gray-100 overflow-x-auto">
@@ -151,7 +148,6 @@ function InformationEmployee() {
                     {employee.status}
                   </span>
                 </td>
-                
               </tr>
             ))}
           </tbody>
