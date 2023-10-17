@@ -81,8 +81,8 @@ function addDevice() {
       return;
     }
 
-     // เครียร์ข้อผิดพลาดเมื่อข้อมูลถูกต้อง
-     setError("");
+    // เครียร์ข้อผิดพลาดเมื่อข้อมูลถูกต้อง
+    setError("");
 
     // ตรวจสอบและกำหนดค่า startDate และ endDate ให้เป็น null หรือ '-'
     const formattedStartDate = startDate || ""; // หรือ '-'
