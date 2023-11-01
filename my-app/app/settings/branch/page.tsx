@@ -1,30 +1,20 @@
-"use client";
-import Link from "next/link";
-
 import React from "react";
-import { BsDatabaseAdd, BsPencilSquare } from "react-icons/bs";
-import DeleteBranch from "@/components/branch/DeleteBranch";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
+import AddBranch from "./addBranch";
 
 const getBranchs = async () => {
-  try {
-    const res = await fetch("http://localhost:3000/api/branch", {
-      cache: "no-store",
-    });
-
-    if (!res.ok) {
-      throw new Error("failed to fetch branch");
-    }
-
-    return res.json();
-  } catch (error) {
-    console.log("Error loading branch", error);
-  }
+  const data = await prisma.branch.findMany({
+    select: {
+      id: true,
+      name: true,
+    },
+  });
+  return data;
 };
 
-async function Brand() {
-  const { branchs } = await getBranchs();
-  const branchsCount = branchs.length;
-
+const Branch = async () => {
+  const [branchs] = await Promise.all([getBranchs()]);
   return (
     <div className="grid place-items-center bg-white">
       <div className="text-center">
@@ -32,20 +22,11 @@ async function Brand() {
           Branch Management
         </p>
         <div className="my-3">
-          <Link href={"/settings/branch/add"}>
-            <button className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:px-4 sm:py-2 md:text-base md:px-4 md:py-2 lg:text-lg lg:px-4.5 lg:py-2.5">
-              <span className="flex items-center gap-2 text-white">
-                {" "}
-                Add Branch
-                <BsDatabaseAdd />
-              </span>
-            </button>
-          </Link>
+          <AddBranch />
         </div>
       </div>
       <div className="text-xs md:text-sm lg:text-base text-indigo-600">
-        Showing {branchsCount}
-        results.
+        Showing results.
       </div>
       <div className="overflow-scroll w-full rounded-lg border border-gray-200 shadow-md mt-2">
         <table className="w-full border-collapse bg-white text-left text-sm text-gray-500 ">
@@ -72,32 +53,17 @@ async function Brand() {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100 border-t border-gray-100 overflow-x-auto">
-            {branchs &&
-              branchs.map((item, index) => (
-                <tr key={item._id} className="hover:bg-indigo-100">
-                  <td className="px-6 py-2.5 text-gray-700">{index + 1}</td>
-                  <td className="px-6 py-2.5 text-gray-700">{item.name}</td>
-
-                  <td>
-                    <div className="flex gap-2">
-                      <Link href={`/settings/branch/update/${item._id}`}>
-                        <button className="gap-2 inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-sm font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
-                          Update
-                          <BsPencilSquare className="text-lg" />
-                        </button>
-                      </Link>
-                      <div className="">
-                        <DeleteBranch id={item._id} />
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              ))}{" "}
+            {branchs.map((branch, index) => (
+              <tr key={branch.id} className="hover:bg-indigo-100">
+                <td className="px-6 py-2.5 text-gray-700">{index + 1}</td>
+                <td className="px-6 py-2.5 text-gray-700">{branch.name}</td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
     </div>
   );
-}
+};
 
-export default Brand;
+export default Branch;

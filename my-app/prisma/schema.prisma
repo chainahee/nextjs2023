@@ -1,0 +1,38 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Employee {
+  id           Int         @id @default(autoincrement())
+  employeeID   String
+  fullname     String
+  email        String
+  department   Department? @relation(fields: [departmentId], references: [id])
+  departmentId Int?
+  branch       Branch?     @relation(fields: [branchId], references: [id])
+  branchId     Int?
+  isActive     String
+  createdAt    DateTime    @default(now())
+  updatedAt    DateTime    @updatedAt
+}
+
+model Department {
+  id        Int        @id @default(autoincrement())
+  name      String
+  employees Employee[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Branch {
+  id        Int        @id @default(autoincrement())
+  name      String
+  employees Employee[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}

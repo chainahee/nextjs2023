@@ -1,267 +1,153 @@
 "use client";
-import React, { useState, useEffect } from "react";
-import Link from "next/link";
+import React, { useState, SyntheticEvent } from "react";
+import type { department, branch } from "@prisma/client";
+import axios from "axios";
 import { useRouter } from "next/navigation";
 
-function AddEmployee() {
-  const [employeeid, setEmployeeid] = useState("");
+function AddEmployee({
+  departments,
+  branchs,
+}: {
+  departments: department[];
+  branchs: branch[];
+}) {
+  const [employeeID, setEmployeeID] = useState("");
   const [fullname, setFullName] = useState("");
-  const [departments, setDepartments] = useState([]);
+  const [email, setEmail] = useState("");
   const [department, setDepartment] = useState("");
-  const [branchs, setBranchs] = useState([]);
   const [branch, setBranch] = useState("");
-  const [statusEmployee, setStatusEmployee] = useState([]);
-  const [status, setStatus] = useState("");
+  const [isActive, setIsActive] = useState("");
+  const [isOpen, setIsOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
   const router = useRouter();
 
-  const uniqueData = new Set();
-
-  // ตรวจสอบความซ้ำ
-  if (uniqueData.has("ข้อมูลที่ไม่ซ้ำกัน")) {
-    console.log("ข้อมูลนี้มีอยู่แล้ว");
-  } else {
-    console.log("เพิ่มข้อมูลนี้ได้");
-  }
-
-  useEffect(() => {
-    const fetchDepartments = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/api/department");
-        if (!response.ok) {
-          throw new Error("Failed to fetch departments");
-        }
-        const data = await response.json();
-        setDepartments(data.departments);
-      } catch (error) {
-        console.log("Error loading departments", error);
-      }
-    };
-
-    fetchDepartments();
-  }, []);
-
-  useEffect(() => {
-    const fetchBranchs = async () => {
-      try {
-        const response = await fetch("http://localhost:3000/api/branch");
-        if (!response.ok) {
-          throw new Error("Failed to fetch branchs");
-        }
-        const data = await response.json();
-        setBranchs(data.branchs);
-      } catch (error) {
-        console.log("Error loading branchs", error);
-      }
-    };
-
-    fetchBranchs();
-  }, []);
-
-  useEffect(() => {
-    const fetchStatus = async () => {
-      try {
-        const response = await fetch(
-          "http://localhost:3000/api/statusemployee"
-        );
-        if (!response.ok) {
-          throw new Error("Failed to fetch statusEmployee");
-        }
-        const data = await response.json();
-        setStatusEmployee(data.statusEmployee);
-      } catch (error) {
-        console.log("Error loading statusEmployee", error);
-      }
-    };
-
-    fetchStatus();
-  }, []);
-
-  const handlerSubmit = async (e) => {
-    e.preventDefault();
-
-    if (!employeeid || !fullname || !department || !branch || !status) {
-      alert("โปรดกรอกข้อมูลให้ครบ");
-      return;
-    }
-
-    // ตรวจสอบความซ้ำกันในรายการที่ต้องการเพิ่ม
-    const isDuplicate = uniqueData.has(employeeid); // เช็คจาก Set ที่เก็บไว้
-
-    if (isDuplicate) {
-      alert("ข้อมูลนี้มีอยู่แล้ว");
-      return;
-    }
-
-    try {
-      const res = await fetch("http://localhost:3000/api/employee", {
-        method: "POST",
-        headers: {
-          "Content-type": "application/json",
-        },
-        body: JSON.stringify({
-          employeeid,
-          fullname,
-          department,
-          branch,
-          status,
-        }),
-      });
-
-      console.log(res);
-
-      if (res.ok) {
-        // หากสำเร็จในการสร้างพนักงาน
-        router.push("/employee");
-
-        // เพิ่มข้อมูลเข้า Set เพื่อตรวจสอบในครั้งถัดไป
-        uniqueData.add(employeeid);
-      } else {
-        throw new Error("Failed to create a employee");
-      }
-    } catch (err) {
-      console.log(err);
-    }
+  const handleModal = () => {
+    setIsOpen(!isOpen);
   };
 
-  // console.log(fullname);
+  const handleSubmit = async (e: SyntheticEvent) => {
+    e.preventDefault();
+    await axios.post("/api/employees", {
+      employeeID: employeeID,
+      fullname: fullname,
+      email: email,
+      departmentId: Number(department),
+      branchId: Number(branch),
+      isActive: isActive,
+    });
+    setIsLoading(false);
+    setEmployeeID("");
+    setFullName("");
+    setEmail("");
+    setDepartment("");
+    setBranch("");
+    setIsActive("");
+    router.refresh();
+    setIsOpen(false);
+  };
 
   return (
     <div>
-      <div className="flex items-center justify-center">
-        <h1 className="text-2xl font-bold text-indigo-500">
-          Form Add Employee
-        </h1>
-      </div>
-
-      <form onSubmit={handlerSubmit}>
-        <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-          <div className="sm:col-span-3">
-            <label
-              htmlFor="employeeID"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Employee ID :
-            </label>
-            <input
-              type="number"
-              name="employeeID"
-              id="employeeID"
-              value={employeeid}
-              onChange={(e) => setEmployeeid(e.target.value)}
-              placeholder="EmployeeID"
-              className="mt-2 block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            />
-          </div>
-          <div className="sm:col-span-3">
-            <label
-              htmlFor="employeeID"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Full Name :
-            </label>
-            <input
-              type="text"
-              name="fullname"
-              id="fullname"
-              value={fullname}
-              onChange={(e) => setFullName(e.target.value)}
-              placeholder="Full Name"
-              className="mt-2 block w-full rounded-md border-0 px-3 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-            />
-          </div>
-        </div>
-        <div className="mt-4 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-          <div className="sm:col-span-2">
-            <label
-              htmlFor="department"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Department :
-            </label>
-            <div className="mt-2">
+      <button className="btn" onClick={handleModal}>
+        Add New
+      </button>
+      <div className={isOpen ? "modal modal-open" : "modal"}>
+        <div className="modal-box w-11/12 max-w-5xl">
+          <h3>Add New Employee</h3>
+          <form onSubmit={handleSubmit}>
+            <div className="from-control w-full">
+              <label className="label font-bold">Employee ID :</label>
+              <input
+                type="text"
+                value={employeeID}
+                onChange={(e) => setEmployeeID(e.target.value)}
+                className="input input-bordered input-sm w-full max-w-xs"
+              />
+            </div>
+            <div className="from-control w-full">
+              <label className="label font-bold">FullName :</label>
+              <input
+                type="text"
+                value={fullname}
+                onChange={(e) => setFullName(e.target.value)}
+                className="input input-bordered input-sm w-full max-w-xs"
+              />
+            </div>
+            <div className="from-control w-full">
+              <label className="label font-bold">Email :</label>
+              <input
+                type="text"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                className="input input-bordered input-sm w-full max-w-xs"
+              />
+            </div>
+            <div className="from-control w-full">
+              <label className="label font-bold">Department :</label>
               <select
-                id="department"
-                name="department"
-                className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 value={department}
                 onChange={(e) => setDepartment(e.target.value)}
+                className="select select-primary w-full max-w-xs"
               >
-                <option value="0">Select a Department</option>
-                {departments.map((department) => (
-                  <option key={department._id} value={department.name}>
-                    <div className="my-2">{department.name}</div>
+                <option disabled value="">
+                  Select Department
+                </option>
+                {departments.map((deparment) => (
+                  <option value={deparment.id} key={deparment.id}>
+                    {deparment.name}
                   </option>
                 ))}
               </select>
             </div>
-          </div>
-
-          <div className="sm:col-span-2">
-            <label
-              htmlFor="brand"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Branch :
-            </label>
-            <div className="mt-2">
+            <div className="from-control w-full">
+              <label className="label font-bold">Branch :</label>
               <select
-                id="branch"
-                name="branch"
-                className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
                 value={branch}
                 onChange={(e) => setBranch(e.target.value)}
+                className="select select-primary w-full max-w-xs"
               >
-                <option value="0">Select a Branch</option>
-                {branchs &&
-                  branchs.map((branch) => (
-                    <option key={branch._id} value={branch.name}>
-                      <div className="my-2">{branch.name}</div>
-                    </option>
-                  ))}
+                <option disabled value="">
+                  Select Branch
+                </option>
+                {branchs.map((branch) => (
+                  <option value={branch.id} key={branch.id}>
+                    {branch.name}
+                  </option>
+                ))}
               </select>
             </div>
-          </div>
-
-          <div className="sm:col-span-2">
-            <label
-              htmlFor="brand"
-              className="block text-sm font-medium leading-6 text-gray-900"
-            >
-              Status :
-            </label>
-            <div className="mt-2">
+            <div className="from-control w-full">
+              <label className="label font-bold">Status :</label>
               <select
-                id="branch"
-                name="branch"
-                className="p-2 block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6"
-                value={status}
-                onChange={(e) => setStatus(e.target.value)}
+                value={isActive}
+                onChange={(e) => setIsActive(e.target.value)}
+                className="select select-primary w-full max-w-xs"
               >
-                <option value="0">Select a Status</option>
-                {statusEmployee &&
-                  statusEmployee.map((status) => (
-                    <option key={status._id} value={status.name}>
-                      <div className="my-2">{status.name}</div>
-                    </option>
-                  ))}
+                <option disabled value="">
+                  Select Status
+                </option>
+                <option>Active</option>
+                <option>On Leave</option>
               </select>
             </div>
-          </div>
+            <div className="modal-action">
+              <button type="button" className="btn" onClick={handleModal}>
+                Close
+              </button>
+              {!isLoading ? (
+                <button type="submit" className="btn btn-primary">
+                  Save
+                </button>
+              ) : (
+                <button type="button" className="btn loading">
+                  Saving...
+                </button>
+              )}
+            </div>
+          </form>
         </div>
-        <div className="mt-6 flex items-center justify-end gap-x-6">
-          <Link href="/employee">
-            <span className="rounded-md bg-red-600 px-3 py-2 text-sm text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-red-600">
-              Cancel
-            </span>
-          </Link>
-          <button
-            type="submit"
-            className="rounded-md bg-indigo-600 px-3 py-2 text-sm text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          >
-            Add
-          </button>
-        </div>
-      </form>
+      </div>
     </div>
   );
 }

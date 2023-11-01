@@ -56,9 +56,8 @@ function Employee() {
     fetchEmployee();
   }, []);
 
-console.log(records);
+  console.log(records);
 
-  
   return (
     <div className="grid place-items-center bg-white">
       <div className="text-center">
@@ -96,27 +95,13 @@ console.log(records);
         <table className="table-auto w-full border-collapse bg-white text-xs md:text-sm text-gray-500">
           <thead className="bg-indigo-50">
             <tr className="">
-              <th className="px-6 py-2 text-gray-900">
-                No
-              </th>
-              <th className="px-6 py-4 text-gray-900">
-                Employee ID
-              </th>
-              <th className="px-6 py-4 text-gray-900">
-                Full Name
-              </th>
-              <th className="px-6 py-4 text-gray-900">
-                Department
-              </th>
-              <th className="px-6 py-4 text-gray-900">
-                Branch
-              </th>
-              <th className="px-6 py-4 text-gray-900">
-                Status
-              </th>
-              <th className="px-6 py-4 text-gray-900">
-                Action
-              </th>
+              <th className="px-6 py-2 text-gray-900">No</th>
+              <th className="px-6 py-4 text-gray-900">Employee ID</th>
+              <th className="px-6 py-4 text-gray-900">Full Name</th>
+              <th className="px-6 py-4 text-gray-900">Department</th>
+              <th className="px-6 py-4 text-gray-900">Branch</th>
+              <th className="px-6 py-4 text-gray-900">Status</th>
+              <th className="px-6 py-4 text-gray-900">Action</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100 border-t border-gray-100">

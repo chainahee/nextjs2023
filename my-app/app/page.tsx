@@ -10,8 +10,8 @@ export default function Home() {
         </h1>
       </div>
       <div className="lg:flex  mt-5 w-full border rounded-md shadow-md overflow-hidden">
-        <CardEmployee />
-        <CardDevice />
+        {/* <CardEmployee />
+        <CardDevice /> */}
       </div>
     </div>
   );
