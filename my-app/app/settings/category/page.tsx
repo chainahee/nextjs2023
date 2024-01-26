@@ -24,6 +24,9 @@ const getCategory = async () => {
 async function Brand() {
   const { categorys } = await getCategory();
   const categoryCount = categorys.length;
+  const sortedCategorys = categorys.sort((a, b) =>
+    a.name.localeCompare(b.name)
+  );
 
   return (
     <div className="grid place-items-center bg-white">
@@ -71,8 +74,8 @@ async function Brand() {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100 border-t border-gray-100 overflow-x-auto">
-            {categorys &&
-              categorys.map((item, index) => (
+            {sortedCategorys &&
+              sortedCategorys.map((item, index) => (
                 <tr key={item._id} className="hover:bg-indigo-100">
                   <td className="px-6 py-2.5 text-gray-700">{index + 1}</td>
                   <td className="px-6 py-2.5 text-gray-700">{item.name}</td>

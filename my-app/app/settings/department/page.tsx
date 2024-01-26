@@ -1,50 +1,40 @@
-"use client";
-import Link from "next/link";
-
 import React from "react";
-import { BsDatabaseAdd, BsPencilSquare } from "react-icons/bs";
-import DeleteDepartment from "@/components/department/Deletedepartment";
+import { PrismaClient } from "@prisma/client";
+const prisma = new PrismaClient();
+import AddDepartment from "./addDepartment";
+import DeleteDepartment from "./deleteDepartment";
+import UpdateDepartment from "./updateDepartment";
 
-const getDepartment = async () => {
-  try {
-    const res = await fetch("http://localhost:3000/api/department", {
-      cache: "no-store",
-    });
+const getDepartments = async () => {
+  const data = await prisma.department.findMany({
+    select: {
+      id: true,
+      name: true,
+    },
+    orderBy: {
+      name: "asc",
+    },
+  });
 
-    if (!res.ok) {
-      throw new Error("failed to fetch department");
-    }
-
-    return res.json();
-  } catch (error) {
-    console.log("Error loading department", error);
-  }
+  return data;
 };
 
-async function Department() {
-  const { departments } = await getDepartment();
-  const departmentsCount = departments.length;
+const Department = async () => {
+  const [departments] = await Promise.all([getDepartments()]);
+  const departmentCount = departments.length;
 
   return (
     <div className="grid place-items-center bg-white">
       <div className="text-center">
         <p className="text-3xl font-medium text-indigo-600">
-          Department Management
+          Branch Management
         </p>
         <div className="my-3">
-          <Link href={"/settings/department/add"}>
-            <button className="rounded-md bg-indigo-600 px-3 py-1.5 text-sm text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:px-4 sm:py-2 md:text-base md:px-4 md:py-2 lg:text-lg lg:px-4.5 lg:py-2.5">
-              <span className="flex items-center gap-2 text-white">
-                {" "}
-                Add Department
-                <BsDatabaseAdd />
-              </span>
-            </button>
-          </Link>
+          <AddDepartment />
         </div>
       </div>
-      <div className="text-xs md:text-sm lg:text-base text-indigo-600">
-        Showing {departmentsCount} results.
+      <div className="text-sm md:text-sm lg:text-base text-indigo-600 font-medium">
+        Showing {departmentCount} results.
       </div>
       <div className="overflow-scroll w-full rounded-lg border border-gray-200 shadow-md mt-2">
         <table className="w-full border-collapse bg-white text-left text-sm text-gray-500 ">
@@ -54,13 +44,13 @@ async function Department() {
                 scope="col"
                 className="px-6 py-2 font-semibold text-gray-900 lg:text-base sm:text-sm"
               >
-                No
+                #
               </th>
               <th
                 scope="col"
                 className="px-6 py-4 font-semibold text-gray-900 lg:text-base sm:text-sm"
               >
-                Branch Name
+                Deprtment Name
               </th>
               <th
                 scope="col"
@@ -71,31 +61,25 @@ async function Department() {
             </tr>
           </thead>
           <tbody className="divide-y divide-gray-100 border-t border-gray-100 overflow-x-auto">
-            {departments &&
-              departments.map((item, index) => (
-                <tr key={item._id} className="hover:bg-indigo-100">
-                  <td className="px-6 py-2.5 text-gray-700">{index + 1}</td>
-                  <td className="px-6 py-2.5 text-gray-700">{item.name}</td>
-
-                  <td>
-                    <div className="flex gap-2">
-                      <Link href={`/settings/department/update/${item._id}`}>
-                        <button className="gap-2 inline-flex items-center rounded-md bg-yellow-50 px-2 py-1 text-sm font-medium text-yellow-800 ring-1 ring-inset ring-yellow-600/20">
-                          Update <BsPencilSquare className="text-lg" />
-                        </button>
-                      </Link>
-                      <div className="">
-                        <DeleteDepartment id={item._id} />
-                      </div>
-                    </div>
-                  </td>
-                </tr>
-              ))}
+            {departments.map((department, index) => (
+              <tr key={department.id} className="hover:bg-indigo-100">
+                <td className="px-6 py-2.5 text-gray-700">{index + 1}</td>
+                <td className="px-6 py-2.5 text-gray-700">
+                  {department.name}
+                </td>{" "}
+                <td>
+                  <div className="flex gap-2">
+                    <UpdateDepartment department={department} />
+                    <DeleteDepartment department={department} />
+                  </div>
+                </td>
+              </tr>
+            ))}
           </tbody>
         </table>
       </div>
     </div>
   );
-}
+};
 
 export default Department;

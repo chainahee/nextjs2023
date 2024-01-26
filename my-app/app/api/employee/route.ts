@@ -1,10 +1,10 @@
 import { NextResponse } from "next/server";
 import { PrismaClient } from "@prisma/client";
-import type { employee } from "@prisma/client";
+import type { Employee } from "@prisma/client";
 const prisma = new PrismaClient();
 
 export const POST = async (request: Request) => {
-  const body: employee = await request.json();
+  const body: Employee = await request.json();
   const employee = await prisma.employee.create({
     data: {
       employeeID: body.employeeID,
@@ -12,7 +12,7 @@ export const POST = async (request: Request) => {
       email: body.email,
       departmentId: body.departmentId,
       branchId: body.branchId,
-      isActive: body.isActive,
+      statusId: body.statusId,
     },
   });
   return NextResponse.json(employee, { status: 201 });

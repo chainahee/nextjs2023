@@ -3,13 +3,12 @@ import React, { useState, SyntheticEvent } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
-const AddBranch = () => {
+const AddDepartment = () => {
   const [name, setName] = useState("");
 
   const router = useRouter();
 
   const [isOpen, setIsOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
 
   const handleModal = () => {
     setIsOpen(!isOpen);
@@ -17,7 +16,7 @@ const AddBranch = () => {
 
   const handleSubmit = async (e: SyntheticEvent) => {
     e.preventDefault();
-    await axios.post("/api/branch", {
+    await axios.post("/api/department", {
       name: name,
     });
     setName("");
@@ -31,15 +30,17 @@ const AddBranch = () => {
         className="btn btn-outline btn-primary btn-sm"
         onClick={handleModal}
       >
-        Add New Branch
+        Add New Department
       </button>
       <div className={isOpen ? "modal modal-open" : "modal"}>
         <div className="modal-box">
-          <h3 className="font-bold text-lg text-gray-900">Add New Branch</h3>
+          <h3 className="font-bold text-lg text-gray-900">
+            Add New Department
+          </h3>
           <form className="space-y-6" onSubmit={handleSubmit}>
             <div className="mt-3">
               <label className="block text-sm font-medium leading-6 text-gray-900 text-start">
-                Branch Name
+                Department Name
               </label>
               <div className="mt-2">
                 <input
@@ -60,21 +61,12 @@ const AddBranch = () => {
               >
                 Cancel
               </button>
-              {!isLoading ? (
-                <button
-                  type="submit"
-                  className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 sm:mt-0 sm:w-auto"
-                >
-                  Save
-                </button>
-              ) : (
-                <button
-                  type="button"
-                  className="inline-flex items-center rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 loading sm:mt-0 sm:w-auto"
-                >
-                  Saving...
-                </button>
-              )}
+              <button
+                type="submit"
+                className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
+              >
+                Save
+              </button>
             </div>
           </form>
         </div>
@@ -83,4 +75,4 @@ const AddBranch = () => {
   );
 };
 
-export default AddBranch;
+export default AddDepartment;

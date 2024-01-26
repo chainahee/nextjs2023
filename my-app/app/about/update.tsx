@@ -4,30 +4,42 @@ import { department, branch, status } from "@prisma/client";
 import { useRouter } from "next/navigation";
 import axios from "axios";
 
-function addEmployee({
+type Employee = {
+  id: number;
+  employeeID: string;
+  fullname: string;
+  email: string;
+  departmentId: number | null;
+  branchId: number | null;
+  statusId: number | null;
+};
+
+function UpdateEmployee({
+  employee,
   departments,
   branchs,
   status,
 }: {
+  employee: Employee;
   departments: department[];
   branchs: branch[];
   status: status[];
 }) {
-  const [employeeID, setEmployeeID] = useState("");
-  const [fullname, setFullName] = useState("");
-  const [email, setEmail] = useState("");
-  const [department, setDepartment] = useState("");
-  const [branch, setBranch] = useState("");
-  const [statuss, setStatus] = useState("");
+  const [employeeID, setEmployeeID] = useState(employee.employeeID);
+  const [fullname, setFullName] = useState(employee.fullname);
+  const [email, setEmail] = useState(employee.email);
+  const [department, setDepartment] = useState(employee.departmentId);
+  const [branch, setBranch] = useState(employee.branchId);
+  const [statuss, setStatus] = useState(employee.statusId);
   const [isOpen, setIsOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
   const router = useRouter();
 
-  const handleSubmit = async (e: SyntheticEvent) => {
+  const handleUpdate = async (e: SyntheticEvent) => {
     e.preventDefault();
     setIsLoading(true);
-    await axios.post("/api/employee", {
+    await axios.patch(`/api/employee/${employee.id}`, {
       employeeID: employeeID,
       fullname: fullname,
       email: email,
@@ -36,12 +48,6 @@ function addEmployee({
       statusId: Number(statuss),
     });
     setIsLoading(false);
-    setEmployeeID("");
-    setFullName("");
-    setEmail("");
-    setDepartment("");
-    setBranch("");
-    setStatus("");
     router.refresh();
     setIsOpen(false);
   };
@@ -59,15 +65,17 @@ function addEmployee({
         className="btn btn-outline btn-primary btn-sm"
         onClick={openModal}
       >
-        Add Employee
+        Update
       </button>
       {isOpen && (
         <div className="">
           <div className="modal modal-open ">
             <div className="modal-box w-11/12 max-w-5xl">
-              <h1 className="text-2xl font-bold">Add Employee</h1>
+              <h1 className="text-xl font-bold">
+                Update Employee K. {employee.fullname}
+              </h1>
 
-              <form onSubmit={handleSubmit}>
+              <form onSubmit={handleUpdate}>
                 <div className="from-control w-full">
                   <label className="label font-bold">Employee ID :</label>
                   <input
@@ -99,12 +107,9 @@ function addEmployee({
                   <label className="label font-bold">Department :</label>
                   <select
                     value={department}
-                    onChange={(e) => setDepartment(e.target.value)}
+                    onChange={(e) => setDepartment(Number(e.target.value))}
                     className="select select-primary w-full max-w-xs"
                   >
-                    <option disabled value="">
-                      Select Department
-                    </option>
                     {departments.map((deparment) => (
                       <option value={deparment.id} key={deparment.id}>
                         {deparment.name}
@@ -116,12 +121,9 @@ function addEmployee({
                   <label className="label font-bold">Branch :</label>
                   <select
                     value={branch}
-                    onChange={(e) => setBranch(e.target.value)}
+                    onChange={(e) => setBranch(Number(e.target.value))}
                     className="select select-primary w-full max-w-xs"
                   >
-                    <option disabled value="">
-                      Select Branch
-                    </option>
                     {branchs.map((branch) => (
                       <option value={branch.id} key={branch.id}>
                         {branch.name}
@@ -133,7 +135,7 @@ function addEmployee({
                   <label className="label font-bold">Status :</label>
                   <select
                     value={statuss}
-                    onChange={(e) => setStatus(e.target.value)}
+                    onChange={(e) => setStatus(Number(e.target.value))}
                     className="select select-primary w-full max-w-xs"
                   >
                     <option disabled value="">
@@ -149,11 +151,11 @@ function addEmployee({
                 <div className="modal-action">
                   {!isLoading ? (
                     <button type="submit" className="btn btn-primary">
-                      Save
+                      Update
                     </button>
                   ) : (
                     <button type="button" className="btn loading">
-                      Saving...
+                      Updating...
                     </button>
                   )}
                 </div>
@@ -174,4 +176,4 @@ function addEmployee({
   );
 }
 
-export default addEmployee;
+export default UpdateEmployee;

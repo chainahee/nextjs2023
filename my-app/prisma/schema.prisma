@@ -16,7 +16,8 @@ model Employee {
   departmentId Int?
   branch       Branch?     @relation(fields: [branchId], references: [id])
   branchId     Int?
-  isActive     String
+  status       Status?     @relation(fields: [statusId], references: [id])
+  statusId     Int?
   createdAt    DateTime    @default(now())
   updatedAt    DateTime    @updatedAt
 }
@@ -24,7 +25,7 @@ model Employee {
 model Department {
   id        Int        @id @default(autoincrement())
   name      String
-  employees Employee[]
+  employee  Employee[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
 }
@@ -32,7 +33,15 @@ model Department {
 model Branch {
   id        Int        @id @default(autoincrement())
   name      String
-  employees Employee[]
+  employee  Employee[]
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+}
+
+model Status {
+  id        Int        @id @default(autoincrement())
+  name      String
+  employee  Employee[]
   createdAt DateTime   @default(now())
   updatedAt DateTime   @updatedAt
 }

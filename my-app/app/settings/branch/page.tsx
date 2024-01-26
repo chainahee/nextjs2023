@@ -2,6 +2,8 @@ import React from "react";
 import { PrismaClient } from "@prisma/client";
 const prisma = new PrismaClient();
 import AddBranch from "./addBranch";
+import UpdateBranch from "./updateBranch";
+import DeleteBranch from "./deleteBranch";
 
 const getBranchs = async () => {
   const data = await prisma.branch.findMany({
@@ -9,12 +11,18 @@ const getBranchs = async () => {
       id: true,
       name: true,
     },
+    orderBy: {
+      name: "asc",
+    },
   });
+
   return data;
 };
 
 const Branch = async () => {
   const [branchs] = await Promise.all([getBranchs()]);
+  const branchCount = branchs.length;
+
   return (
     <div className="grid place-items-center bg-white">
       <div className="text-center">
@@ -25,8 +33,8 @@ const Branch = async () => {
           <AddBranch />
         </div>
       </div>
-      <div className="text-xs md:text-sm lg:text-base text-indigo-600">
-        Showing results.
+      <div className="text-sm md:text-sm lg:text-base text-indigo-600 font-medium">
+        Showing {branchCount} results.
       </div>
       <div className="overflow-scroll w-full rounded-lg border border-gray-200 shadow-md mt-2">
         <table className="w-full border-collapse bg-white text-left text-sm text-gray-500 ">
@@ -36,7 +44,7 @@ const Branch = async () => {
                 scope="col"
                 className="px-6 py-2 font-semibold text-gray-900 lg:text-base sm:text-sm"
               >
-                No
+                #
               </th>
               <th
                 scope="col"
@@ -56,7 +64,15 @@ const Branch = async () => {
             {branchs.map((branch, index) => (
               <tr key={branch.id} className="hover:bg-indigo-100">
                 <td className="px-6 py-2.5 text-gray-700">{index + 1}</td>
-                <td className="px-6 py-2.5 text-gray-700">{branch.name}</td>
+                <td className="px-6 py-2.5 text-gray-700">
+                  {branch.name}
+                </td>{" "}
+                <td>
+                  <div className="flex gap-2">
+                    <UpdateBranch branch={branch} />
+                    <DeleteBranch branch={branch} />
+                  </div>
+                </td>
               </tr>
             ))}
           </tbody>
